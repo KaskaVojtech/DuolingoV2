@@ -1,0 +1,33 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Environment variables (CITLIVÉ!)
+.env
+.env.local
+.env.production
+
+# Docker
+docker-compose.override.yml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.sqlite
+*.db
+
+# Prisma
+api/prisma/migrations/*_draft/
