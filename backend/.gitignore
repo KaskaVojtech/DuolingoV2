@@ -1,33 +1,17 @@
-# Node
+# node
 node_modules/
-npm-debug.log*
+.next/
+dist/
 
-# Environment variables (CITLIVÉ!)
+# env
 .env
 .env.local
-.env.production
+.env.*
 
-# Docker
-docker-compose.override.yml
+# docker / db
+db/data/
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
+# misc
 .DS_Store
-Thumbs.db
 
-# Logs
-*.log
-logs/
-
-# Database
-*.sqlite
-*.db
-
-# Prisma
-api/prisma/migrations/*_draft/
+.vscode/
