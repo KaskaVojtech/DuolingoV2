@@ -5,14 +5,12 @@ import { prisma } from "./db/prisma.js";
 const app = express();
 
 app.get("/", async (req, res) => {
-  // Caddy (reverse_proxy) typicky přidá tyhle hlavičky
   const xfFor = req.header("x-forwarded-for");
   const xfProto = req.header("x-forwarded-proto");
   const xfHost = req.header("x-forwarded-host");
 
   const viaProxy = Boolean(xfFor || xfProto || xfHost);
 
-  // volitelně: rychlý ping na DB
   let dbOk = false;
   try {
     await prisma.$queryRaw`SELECT 1`;
@@ -24,7 +22,7 @@ app.get("/", async (req, res) => {
   res.json({
     ok: true,
     message: "✅ Server běží",
-    viaProxy, // true = pravděpodobně šlo přes Caddy/reverse proxy
+    viaProxy,
     forwarded: {
       "x-forwarded-for": xfFor ?? null,
       "x-forwarded-proto": xfProto ?? null,
@@ -45,7 +43,6 @@ app.get("/", async (req, res) => {
 
 const port = Number(process.env.PORT ?? 3000);
 
-// DŮLEŽITÉ pro Docker: poslouchej na 0.0.0.0
 app.listen(port, "0.0.0.0", async () => {
   try {
     await prisma.$connect();
@@ -56,7 +53,6 @@ app.listen(port, "0.0.0.0", async () => {
   console.log(`🚀 Server listening on http://0.0.0.0:${port}`);
 });
 
-// Graceful shutdown
 process.on("SIGTERM", async () => {
   await prisma.$disconnect();
   process.exit(0);
