@@ -4,6 +4,8 @@ import { prisma } from "./db/prisma.js";
 
 const app = express();
 
+//test
+
 app.get("/", async (req, res) => {
   const xfFor = req.header("x-forwarded-for");
   const xfProto = req.header("x-forwarded-proto");
@@ -60,4 +62,14 @@ process.on("SIGTERM", async () => {
 process.on("SIGINT", async () => {
   await prisma.$disconnect();
   process.exit(0);
+});
+
+app.post("/auth/login", (req, res) => {
+  console.log("✅ Login button clicked");
+
+  res.json({
+    ok: true,
+    redirectTo: "/admin",
+    message: "Login successful",
+  });
 });

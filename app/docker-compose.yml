@@ -23,7 +23,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: backend
+    container_name: app
     restart: unless-stopped
     env_file:
       - ./backend/.env
@@ -37,15 +37,15 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: frontend_Admin
       dockerfile: Dockerfile
-    container_name: frontend
+    container_name: frontend_Admin
     restart: unless-stopped
     environment:
       NODE_ENV: development
       NEXT_PUBLIC_API_BASE_URL: /api
     volumes:
-      - ./frontend:/app
+      - ./frontend_Admin:/app
       - /app/node_modules
       - /app/.next
     networks:
