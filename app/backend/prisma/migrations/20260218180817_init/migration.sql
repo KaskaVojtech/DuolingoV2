@@ -94,11 +94,28 @@ CREATE TABLE "lesson_words" (
     CONSTRAINT "lesson_words_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "sessions" (
+    "id" UUID NOT NULL,
+    "token_hash" TEXT NOT NULL,
+    "user_id" UUID NOT NULL,
+    "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "expires_at" TIMESTAMPTZ(6) NOT NULL,
+    "revoked_at" TIMESTAMPTZ(6),
+    "user_agent" TEXT,
+    "ip_address" TEXT,
+
+    CONSTRAINT "sessions_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "lesson_words_lesson_id_order_index_key" ON "lesson_words"("lesson_id", "order_index");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "sessions_token_hash_key" ON "sessions"("token_hash");
 
 -- AddForeignKey
 ALTER TABLE "user_roles" ADD CONSTRAINT "user_roles_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -135,3 +152,6 @@ ALTER TABLE "lesson_words" ADD CONSTRAINT "lesson_words_lesson_id_fkey" FOREIGN 
 
 -- AddForeignKey
 ALTER TABLE "lesson_words" ADD CONSTRAINT "lesson_words_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

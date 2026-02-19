@@ -1,163 +1,180 @@
-datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+generator client {
+  provider = "prisma-client"
 }
 
-generator client {
-    provider = "prisma-client-js"
+datasource db {
+  provider = "postgresql"
 }
 
 // ============================================
 // USERS
 // ============================================
 model User {
-    id           String    @id @default(uuid()) @db.Uuid
-    passwordHash String?   @map("password_hash")
-    email        String?   @unique
-    displayName  String    @map("display_name")
-    isActive     Boolean   @default(true) @map("is_active")
-    status       String    @default("pending") // pending | active | disabled
-    createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-    updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
-    lastLoginAt  DateTime? @map("last_login_at") @db.Timestamptz(6)
+  id           String    @id @default(uuid()) @db.Uuid
+  passwordHash String?   @map("password_hash")
+  email        String?   @unique
+  displayName  String    @map("display_name")
+  isActive     Boolean   @default(true) @map("is_active")
+  status       String    @default("pending") // pending | active | disabled
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  lastLoginAt  DateTime? @map("last_login_at") @db.Timestamptz(6)
 
-    // Relations
-    userRoles          UserRole[]
-    createdAccessCodes StudentAccessCode[] @relation("CreatedBy")
-    usedAccessCodes    StudentAccessCode[] @relation("UsedBy")
-    createdGroups      Group[]             @relation("CreatedBy")
-    groupMemberships   GroupMember[]
-    createdLessons     Lesson[]            @relation("CreatedBy")
-    createdLessonWords LessonWord[]        @relation("CreatedBy")
+  // Relations
+  userRoles          UserRole[]
+  createdAccessCodes StudentAccessCode[] @relation("CreatedBy")
+  usedAccessCodes    StudentAccessCode[] @relation("UsedBy")
+  createdGroups      Group[]             @relation("CreatedBy")
+  groupMemberships   GroupMember[]
+  createdLessons     Lesson[]            @relation("CreatedBy")
+  createdLessonWords LessonWord[]        @relation("CreatedBy")
+  sessions           Session[]
 
-    @@map("users")
+  @@map("users")
 }
 
 // ============================================
 // ROLES
 // ============================================
 model Role {
-    key         String  @id
-    name        String
-    description String?
+  key         String  @id
+  name        String
+  description String?
 
-    // Relations
-    userRoles UserRole[]
+  // Relations
+  userRoles UserRole[]
 
-    @@map("roles")
+  @@map("roles")
 }
 
 // ============================================
 // USER ROLES (Many-to-Many)
 // ============================================
 model UserRole {
-    userId  String @map("user_id") @db.Uuid
-    roleKey String @map("role_key")
+  userId  String @map("user_id") @db.Uuid
+  roleKey String @map("role_key")
 
-    // Relations
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    role Role @relation(fields: [roleKey], references: [key], onDelete: Cascade)
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleKey], references: [key], onDelete: Cascade)
 
-    @@id([userId, roleKey])
-    @@map("user_roles")
+  @@id([userId, roleKey])
+  @@map("user_roles")
 }
 
 // ============================================
 // STUDENT ACCESS CODES
 // ============================================
 model StudentAccessCode {
-    id           String    @id @default(uuid()) @db.Uuid
-    codeHash     String    @map("code_hash")
-    groupId      String?   @map("group_id") @db.Uuid
-    createdBy    String    @map("created_by") @db.Uuid
-    createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-    expiresAt    DateTime? @map("expires_at") @db.Timestamptz(6)
-    usedAt       DateTime? @map("used_at") @db.Timestamptz(6)
-    usedByUserId String?   @map("used_by_user_id") @db.Uuid
-    isRevoked    Boolean   @default(false) @map("is_revoked")
+  id           String    @id @default(uuid()) @db.Uuid
+  codeHash     String    @map("code_hash")
+  groupId      String?   @map("group_id") @db.Uuid
+  createdBy    String    @map("created_by") @db.Uuid
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt    DateTime? @map("expires_at") @db.Timestamptz(6)
+  usedAt       DateTime? @map("used_at") @db.Timestamptz(6)
+  usedByUserId String?   @map("used_by_user_id") @db.Uuid
+  isRevoked    Boolean   @default(false) @map("is_revoked")
 
-    // Relations
-    group      Group? @relation(fields: [groupId], references: [id], onDelete: SetNull)
-    creator    User   @relation("CreatedBy", fields: [createdBy], references: [id], onDelete: Cascade)
-    usedByUser User?  @relation("UsedBy", fields: [usedByUserId], references: [id], onDelete: SetNull)
+  // Relations
+  group      Group? @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  creator    User   @relation("CreatedBy", fields: [createdBy], references: [id], onDelete: Cascade)
+  usedByUser User?  @relation("UsedBy", fields: [usedByUserId], references: [id], onDelete: SetNull)
 
-    @@map("student_access_codes")
+  @@map("student_access_codes")
 }
 
 // ============================================
 // GROUPS
 // ============================================
 model Group {
-    id        String   @id @default(uuid()) @db.Uuid
-    name      String
-    isActive  Boolean  @default(true) @map("is_active")
-    createdBy String   @map("created_by") @db.Uuid
-    createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  isActive  Boolean  @default(true) @map("is_active")
+  createdBy String   @map("created_by") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-    // Relations
-    creator     User                @relation("CreatedBy", fields: [createdBy], references: [id], onDelete: Cascade)
-    members     GroupMember[]
-    accessCodes StudentAccessCode[]
-    lessons     Lesson[]
+  // Relations
+  creator     User                @relation("CreatedBy", fields: [createdBy], references: [id], onDelete: Cascade)
+  members     GroupMember[]
+  accessCodes StudentAccessCode[]
+  lessons     Lesson[]
 
-    @@map("groups")
+  @@map("groups")
 }
 
 // ============================================
 // GROUP MEMBERS (Many-to-Many)
 // ============================================
 model GroupMember {
-    groupId  String   @map("group_id") @db.Uuid
-    userId   String   @map("user_id") @db.Uuid
-    joinedAt DateTime @default(now()) @map("joined_at") @db.Timestamptz(6)
+  groupId  String   @map("group_id") @db.Uuid
+  userId   String   @map("user_id") @db.Uuid
+  joinedAt DateTime @default(now()) @map("joined_at") @db.Timestamptz(6)
 
-    // Relations
-    group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
-    user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Relations
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@id([groupId, userId])
-    @@map("group_members")
+  @@id([groupId, userId])
+  @@map("group_members")
 }
 
 // ============================================
 // LESSONS
 // ============================================
 model Lesson {
-    id          String    @id @default(uuid()) @db.Uuid
-    groupId     String    @map("group_id") @db.Uuid
-    title       String
-    description String?
-    status      String    @default("draft") // draft | published | archived
-    publishedAt DateTime? @map("published_at") @db.Timestamptz(6)
-    locked      Boolean   @default(false)
-    createdBy   String    @map("created_by") @db.Uuid
-    createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-    updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  id          String    @id @default(uuid()) @db.Uuid
+  groupId     String    @map("group_id") @db.Uuid
+  title       String
+  description String?
+  status      String    @default("draft") // draft | published | archived
+  publishedAt DateTime? @map("published_at") @db.Timestamptz(6)
+  locked      Boolean   @default(false)
+  createdBy   String    @map("created_by") @db.Uuid
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-    // Relations
-    group   Group        @relation(fields: [groupId], references: [id], onDelete: Cascade)
-    creator User         @relation("CreatedBy", fields: [createdBy], references: [id], onDelete: Cascade)
-    words   LessonWord[]
+  // Relations
+  group   Group        @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  creator User         @relation("CreatedBy", fields: [createdBy], references: [id], onDelete: Cascade)
+  words   LessonWord[]
 
-    @@map("lessons")
+  @@map("lessons")
 }
 
 // ============================================
 // LESSON WORDS
 // ============================================
 model LessonWord {
-    id          String @id @default(uuid()) @db.Uuid
-    lessonId    String @map("lesson_id") @db.Uuid
-    englishText String @map("english_text")
-    czechText   String @map("czech_text")
-    extrasJson  Json?  @map("extras_json") @db.JsonB
-    orderIndex  Int    @map("order_index")
-    createdBy   String @map("created_by") @db.Uuid
+  id          String @id @default(uuid()) @db.Uuid
+  lessonId    String @map("lesson_id") @db.Uuid
+  englishText String @map("english_text")
+  czechText   String @map("czech_text")
+  extrasJson  Json?  @map("extras_json") @db.JsonB
+  orderIndex  Int    @map("order_index")
+  createdBy   String @map("created_by") @db.Uuid
 
-    // Relations
-    lesson  Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-    creator User   @relation("CreatedBy", fields: [createdBy], references: [id], onDelete: Cascade)
+  // Relations
+  lesson  Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  creator User   @relation("CreatedBy", fields: [createdBy], references: [id], onDelete: Cascade)
 
-    @@unique([lessonId, orderIndex])
-    @@map("lesson_words")
+  @@unique([lessonId, orderIndex])
+  @@map("lesson_words")
+}
+
+// ============================================
+// SESSIONS
+// ============================================
+model Session {
+  id        String    @id @default(uuid()) @db.Uuid
+  tokenHash String    @unique @map("token_hash")
+  userId    String    @map("user_id") @db.Uuid
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz(6)
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz(6)
+  userAgent String?   @map("user_agent")
+  ipAddress String?   @map("ip_address")
+
+  @@map("sessions")
 }

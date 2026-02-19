@@ -1,32 +1,32 @@
-# ---- deps ----
-FROM node:20-alpine AS deps
+FROM node:22-alpine AS builder
+
 WORKDIR /app
+
 COPY package*.json ./
 RUN npm ci
 
-# ---- build ----
-FROM node:20-alpine AS build
-WORKDIR /app
-COPY package*.json ./
-COPY --from=deps /app/node_modules ./node_modules
-COPY prisma ./prisma
+COPY . .
 RUN npx prisma generate
-COPY tsconfig.json ./
-COPY src ./src
 RUN npm run build
 
-# ---- run ----
-FROM node:20-alpine AS runner
+FROM node:22-alpine AS production
+
 WORKDIR /app
+
 ENV NODE_ENV=production
 
 COPY package*.json ./
 RUN npm ci --omit=dev
 
-COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/client
 
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/prisma ./prisma
+COPY --from=builder /app/dist ./dist
 
-CMD ["node", "dist/index.js"]
+COPY prisma ./prisma
+
+EXPOSE 3000
+
+CMD ["node", "dist/main"]
+
+
