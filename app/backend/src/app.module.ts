@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
-import { PostgresModule } from './postgres/postgres.module';
-import { UsersModule } from './users/users.module';
-import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
+import { PostgresModule } from './postgres/postgres.module';
 import { RedisModule } from './redis/redis.module';
-import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [PostgresModule, UsersModule, AuthModule, RedisModule],
+  imports: [
+    AuthModule,
+    PostgresModule,
+    RedisModule,
+    UsersModule,
+  ],
   controllers: [],
   providers: [],
-  exports: [UsersService],
 })
 export class AppModule {}

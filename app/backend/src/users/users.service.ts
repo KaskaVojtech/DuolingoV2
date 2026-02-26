@@ -6,6 +6,15 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
     constructor(private readonly postgresService: PostgresService){}
 
+    async create(data: { email?: string; passwordHash?: string; accessCode?: string; displayName: string }) {
+        return this.postgresService.user.create({
+            data: {
+            ...data,
+            isActive: true,
+            },
+        });
+    }
+
     async findByEmail(email: string){
         return this.postgresService.user.findUnique({
             where: {
@@ -13,6 +22,15 @@ export class UsersService {
             }
         })
     }
+
+    async findByAccessCode(accessCode : string){
+            return this.postgresService.user.findUnique({
+            where: {
+                accessCode,
+            }
+        })
+    }
+    
 
     async registerWithEmail(password: string, displayName: string, email: string){
     

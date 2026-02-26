@@ -7,5 +7,6 @@ import { PostgresModule } from 'src/postgres/postgres.module';
   providers: [UsersService],
   controllers: [UsersController],
   imports: [PostgresModule],
+  exports: [UsersService],
 })
-export class UserModule {}
+export class UsersModule {}
