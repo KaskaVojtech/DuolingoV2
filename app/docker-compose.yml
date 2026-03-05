@@ -29,7 +29,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # ── NestJS backend ────────────────────────────────────────────────────────────
+  # ── NestJS backend ───────────────────────────────────────────────────────────
   backend:
     build:
       context: ./backend
