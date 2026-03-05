@@ -10,10 +10,10 @@ if (process.env.NODE_ENV === 'production' && (!process.env.REDIS_URL || !process
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   app.use(cookieParser());
 
-  const originWhitelist: string[] = require('./originWhiteList');
+  const originWhitelist: string[] = [];
+
   const corsOptions = {
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);

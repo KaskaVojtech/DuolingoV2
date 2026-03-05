@@ -33,8 +33,8 @@ export class AccessTokenGuard implements CanActivate {
     // ============================================
 
     private extractToken(request: Request): string | null {
-        const auth = request.headers.authorization;
-        if (!auth || !auth.startsWith('Bearer ')) return null;
-        return auth.split(' ')[1];
+        return request.cookies?.access_token
+            ?? request.headers.authorization?.split(' ')[1]
+            ?? null;
     }
 }

@@ -30,31 +30,8 @@ export class UsersService {
             }
         })
     }
-    
 
-    async registerWithEmail(password: string, displayName: string, email: string){
-    
-        const existing = await this.postgresService.user.findUnique({ 
-            where: {
-                    email 
-                } 
-        });
-        if (existing) throw new ConflictException('Email already exists');
-        
 
-        const passwordHash = await bcrypt.hash(password, 16);
-
-        return this.postgresService.user.create({
-        data: {
-        email,
-        displayName,
-        passwordHash,
-        status: 'pending', 
-        isActive: true,
-      },
-    });
-  }
-
-    }
+}
     
 

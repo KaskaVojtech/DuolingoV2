@@ -27,6 +27,7 @@ import { AuthController } from "./auth.controller";
     AccessCodeStrategy,
     OpaqueService,
     JwtTokenService,
+    AccessTokenGuard,
     {
       provide: 'IRefreshTokenService',
       useClass: OpaqueService,

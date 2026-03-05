@@ -1,31 +1,39 @@
-FROM node:22-alpine AS builder
-
+# ---------- deps (instalace závislostí) ----------
+FROM node:22-bookworm-slim AS deps
 WORKDIR /app
 
-COPY package*.json ./
+# Pro bcrypt a další nativní moduly
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 make g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY package.json package-lock.json ./
 RUN npm ci
 
-COPY . .
+
+# ---------- build ----------
+FROM node:22-bookworm-slim AS build
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json package-lock.json ./
+COPY tsconfig.json tsconfig.build.json nest-cli.json ./
+COPY src ./src
+COPY test ./test
+COPY prisma ./prisma
 RUN npx prisma generate
+# ✅ generated/ vznikne až po prisma generate, takže ho NEkopíruj z hostu
+# ale zkontroluj že prisma generuje do ./generated/client
 RUN npm run build
 
-FROM node:22-alpine AS production
 
+# ---------- runtime ----------
+FROM node:22-bookworm-slim AS runner
 WORKDIR /app
-
 ENV NODE_ENV=production
-
-COPY package*.json ./
-RUN npm ci --omit=dev
-
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/client
-
-COPY --from=builder /app/dist ./dist
-
-COPY prisma ./prisma
-
+RUN apt-get update && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/*  # ✅ přidej
+COPY package.json package-lock.json ./
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/generated ./generated
 EXPOSE 3000
-
-CMD ["node", "dist/main"]
-
+CMD ["npm", "run", "start:prod"]

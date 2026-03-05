@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { EmailPasswordStrategy } from "./auth-strategies/email-password-strategy.service";
 import { AccessCodeStrategy } from "./auth-strategies/access-code-strategy.service";
@@ -9,6 +9,7 @@ import { AccessTokenGuard } from "./access-token.guard";
 import { RegisterEmailPasswordDto } from "src/users/dtos/register-email-password-dto";
 import { AccessCodeRegisterStrategy } from "src/users/register-strategies/access-code-register-strategy.service";
 import { EmailPasswordRegisterStrategy } from "src/users/register-strategies/email-password-register-strategy.service";
+import type { Request, Response } from 'express'; 
 
 @Controller('auth')
 export class AuthController {
@@ -25,34 +26,79 @@ export class AuthController {
     // ============================================
 
     @Post('login/email')
-        async loginEmail(@Body() credentials: EmailPasswordDto): Promise<AuthResponseDTO> {
-        return this.authService.login(this.emailPasswordStrategy, credentials);
+    async loginEmail(
+        @Body() credentials: EmailPasswordDto,
+        @Res({ passthrough: true }) res: Response,
+    ): Promise<void> {
+        const tokens = await this.authService.login(this.emailPasswordStrategy, credentials);
+        this.setTokenCookies(res, tokens);
     }
 
     @Post('login/code')
-        async loginCode(@Body() credentials: AccessCodeDto): Promise<AuthResponseDTO> {
-        return this.authService.login(this.accessCodeStrategy, credentials);
+    async loginCode(
+        @Body() credentials: AccessCodeDto,
+        @Res({ passthrough: true }) res: Response,
+    ): Promise<void> {
+        const tokens = await this.authService.login(this.accessCodeStrategy, credentials);
+        this.setTokenCookies(res, tokens);
     }
 
     @UseGuards(AccessTokenGuard)
     @Post('logout')
-        async logout(@Req() req): Promise<void> {
-        const token = req.headers.authorization.split(' ')[1];
-        return this.authService.logout(token);
+    async logout(
+        @Req() req: Request,
+        @Res({ passthrough: true }) res: Response,
+    ): Promise<void> {
+        const token = req.cookies?.refresh_token;
+        res.clearCookie('access_token');
+        res.clearCookie('refresh_token', { path: '/auth/refresh' });
+        if (token) await this.authService.logout(token);
     }
 
     @Post('refresh')
-        async refresh(@Body() body: { refreshToken: string }): Promise<AuthResponseDTO> {
-        return this.authService.refresh(body.refreshToken);
+    async refresh(
+        @Req() req: Request,
+        @Res({ passthrough: true }) res: Response,
+    ): Promise<void> {
+        const refreshToken = req.cookies?.refresh_token; 
+        const tokens = await this.authService.refresh(refreshToken);
+        this.setTokenCookies(res, tokens);
     }
 
     @Post('register/email')
-    async registerEmail(@Body() credentials: RegisterEmailPasswordDto): Promise<AuthResponseDTO> {
-    return this.authService.register(this.emailPasswordRegisterStrategy, credentials);
+    async registerEmail(
+        @Body() credentials: RegisterEmailPasswordDto,
+        @Res({ passthrough: true }) res: Response,
+    ): Promise<void> {
+        const tokens = await this.authService.register(this.emailPasswordRegisterStrategy, credentials);
+        this.setTokenCookies(res, tokens);
     }
 
     @Post('register/code')
-    async registerCode(): Promise<AuthResponseDTO> {
-    return this.authService.register(this.accessCodeRegisterStrategy, undefined);
+    async registerCode(
+        @Res({ passthrough: true }) res: Response,
+    ): Promise<void> {
+        const tokens = await this.authService.register(this.accessCodeRegisterStrategy, undefined);
+        this.setTokenCookies(res, tokens);
+    }
+
+
+    private setTokenCookies(res: Response, tokens: AuthResponseDTO): void {
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    res.cookie('access_token', tokens.accessToken, {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? 'strict' : 'lax',
+        domain: isProduction ? process.env.DOMAIN : undefined,
+        maxAge: 15 * 60 * 1000,
+    });
+    res.cookie('refresh_token', tokens.refreshToken, {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? 'strict' : 'lax',
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        path: '/auth/refresh',
+    });
     }
 }

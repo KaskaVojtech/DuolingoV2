@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "generated/*": ["generated/*"]
+    },
+    "outDir": "./dist",
+    "noEmit": false
+  },
+  "include": ["src/**/*.ts", "generated/**/*.ts"]
+}
