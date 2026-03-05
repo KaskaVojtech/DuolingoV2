@@ -9,7 +9,7 @@ CREATE TABLE "users" (
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6) NOT NULL,
     "last_login_at" TIMESTAMPTZ(6),
-
+    "accessCode" TEXT,
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 

@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-appdb}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -47,6 +47,7 @@ services:
       REDIS_URL:    redis://redis:6379
       JWT_SECRET:   ${JWT_SECRET:?JWT_SECRET must be set}
       DOMAIN:       ${DOMAIN:-localhost}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:4000}
     ports:
       - "${BACKEND_PORT:-3000}:3000"
     healthcheck:
@@ -55,6 +56,7 @@ services:
       timeout: 5s
       retries: 5
       start_period: 20s
+    command: sh -c "npx prisma migrate deploy && node dist/main.js"
 
   # ── Next.js admin frontend ────────────────────────────────────────────────────
   frontend:
@@ -62,9 +64,7 @@ services:
       context: ./frontend/admin-frontend
       dockerfile: Dockerfile
       args:
-        # At build time the browser will still hit the public URL,
-        # but SSR server-side fetches go directly through the Docker network.
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://backend:3000}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:3000}
     restart: unless-stopped
     environment:
       NODE_ENV:            production

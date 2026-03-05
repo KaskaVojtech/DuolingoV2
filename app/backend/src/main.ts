@@ -12,7 +12,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
 
-  const originWhitelist: string[] = [];
+  const originWhitelist: string[] = [
+    process.env.FRONTEND_URL ?? 'http://localhost:4000',
+  ];
 
   const corsOptions = {
     origin: (origin, callback) => {

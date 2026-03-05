@@ -15,7 +15,6 @@ datasource db {
 model User {
   id           String    @id @default(uuid()) @db.Uuid
   passwordHash String?   @map("password_hash")
-  accessCode   String?   @unique
   email        String?   @unique
   displayName  String    @map("display_name")
   isActive     Boolean   @default(true) @map("is_active")
@@ -33,6 +32,7 @@ model User {
   createdLessons     Lesson[]            @relation("CreatedBy")
   createdLessonWords LessonWord[]        @relation("CreatedBy")
   sessions           Session[]
+  accessCode   String?   @unique
 
   @@map("users")
 }
