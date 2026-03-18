@@ -31,6 +31,10 @@ export class UsersService {
         })
     }
 
+    async activateUser(userId: string): Promise<void> {
+        await this.userRepository.update(userId, { status: 'active' });
+    }
+
 
 }
     

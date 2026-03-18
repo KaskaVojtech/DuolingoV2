@@ -4,7 +4,7 @@ import type { IAccessTokenService, IRefreshTokenService } from './interfaces/ITo
 import { AuthResponseDTO } from './dtos/auth-response-dto';
 import { IAuthService } from './interfaces/IAuthService';
 import { IRegisterStrategy } from 'src/users/interfaces/IRegisterStrategy';
-
+import { EmailVerificationService } from 'src/email/email-verification.service';
 @Injectable()
 export class AuthService implements IAuthService {
 
@@ -14,6 +14,7 @@ export class AuthService implements IAuthService {
     constructor(
     @Inject('IRefreshTokenService') private readonly refreshTokenService: IRefreshTokenService,
     @Inject('IAccessTokenService') private readonly accessTokenService: IAccessTokenService,
+    private readonly emailVerification: EmailVerificationService,
     ){}
 
     // ============================================
@@ -45,6 +46,11 @@ export class AuthService implements IAuthService {
 
     async register<T>(strategy: IRegisterStrategy<T>, credentials: T): Promise<AuthResponseDTO> {
         const user = await strategy.register(credentials);
+
+        this.emailVerification.createToken(user.id)
+            .then(token => this.emailService.sendVerificationEmail(user.email, token))
+            .catch(err => this.logger.error('Nepodařilo se odeslat verifikační email', err));
+
         const accessToken = await this.accessTokenService.createAccessToken(user.id, this.ACCESS_TOKEN_TTL);
         const refreshToken = await this.refreshTokenService.createRefreshToken(user.id, this.REFRESH_TOKEN_TTL);
         return { accessToken, refreshToken };

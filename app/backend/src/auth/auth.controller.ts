@@ -81,6 +81,12 @@ export class AuthController {
         const tokens = await this.authService.register(this.accessCodeRegisterStrategy, undefined);
         this.setTokenCookies(res, tokens);
     }
+    @Get('verify-email')
+    async verifyEmail(@Query('token') token: string) {
+        if (!token) throw new BadRequestException('Token chybí.');
+        await this.authService.verifyEmail(token);
+        return { message: 'Účet byl úspěšně aktivován.' };
+    }
 
 
     private setTokenCookies(res: Response, tokens: AuthResponseDTO): void {

@@ -9,6 +9,7 @@ import { UsersModule } from "src/users/users.module";
 import { RedisModule } from "src/redis/redis.module";
 import { AccessTokenGuard } from "./access-token.guard";
 import { AuthController } from "./auth.controller";
+import { EmailVerificationModule } from 'src/email-verification/email-verification.module';
 
 
 @Module({
@@ -19,6 +20,7 @@ import { AuthController } from "./auth.controller";
       secret: process.env['JWT_SECRET'],
       signOptions: { expiresIn: '15m' },
     }),
+      EmailVerificationModule,
   ],
   controllers: [AuthController],
   providers: [
