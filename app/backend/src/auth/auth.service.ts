@@ -5,6 +5,7 @@ import { AuthResponseDTO } from './dtos/auth-response-dto';
 import { IAuthService } from './interfaces/IAuthService';
 import { IRegisterStrategy } from 'src/users/interfaces/IRegisterStrategy';
 import { EmailVerificationService } from 'src/email/email-verification.service';
+import { Body, Controller, Get, Post, Query, Req, Res, UseGuards, BadRequestException } from "@nestjs/common";
 @Injectable()
 export class AuthService implements IAuthService {
 
@@ -47,13 +48,20 @@ export class AuthService implements IAuthService {
     async register<T>(strategy: IRegisterStrategy<T>, credentials: T): Promise<AuthResponseDTO> {
         const user = await strategy.register(credentials);
 
-        this.emailVerification.createToken(user.id)
+        this.emailVerificationService.createToken(user.id)
             .then(token => this.emailService.sendVerificationEmail(user.email, token))
             .catch(err => this.logger.error('Nepodařilo se odeslat verifikační email', err));
 
         const accessToken = await this.accessTokenService.createAccessToken(user.id, this.ACCESS_TOKEN_TTL);
         const refreshToken = await this.refreshTokenService.createRefreshToken(user.id, this.REFRESH_TOKEN_TTL);
         return { accessToken, refreshToken };
+    }
+
+    async verifyEmail(rawToken: string): Promise<void> {
+        const userId = await this.emailVerificationService.verifyAndConsume(rawToken);
+        if (!userId) throw new BadRequestException('Token je neplatný nebo vypršel.');
+
+        await this.usersService.activateUser(userId); // viz bod 4
     }
 
 }
