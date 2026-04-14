@@ -1,0 +1,60 @@
+services:
+  postgres-db:
+    image: postgres:16
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
+    ports:
+      - "5445:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6380:6379"
+    restart: always
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build:
+      context: ./lucys_english_backend_vol2
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: always
+    ports:
+      - "3201:3200"
+    env_file:
+      - ./lucys_english_backend_vol2/.env
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres-db:
+        condition: service_started
+
+  frontend:
+    build:
+      context: ./lucys_english_frontend_vol2
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: always
+    ports:
+      - "3001:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3201
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  redis_data:
