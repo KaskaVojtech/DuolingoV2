@@ -1,0 +1,17 @@
+# lucys_english_backend_vol2/Dockerfile
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN npx prisma generate
+RUN npm run build
+RUN cp -r generated dist/generated
+
+EXPOSE 3200
+
+CMD ["npm", "run", "start:prod"]

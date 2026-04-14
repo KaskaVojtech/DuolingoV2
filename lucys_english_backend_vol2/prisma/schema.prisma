@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../generated/prisma"
+  moduleFormat    = "cjs"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          Int          @id @default(autoincrement())
+  passHash    String
+  email       String       @unique
+  status      UserStatus   @default(PENDING)
+  role        UserRole     @default(LEARNER)
+  createdAt   DateTime     @default(now())
+  userCourses UserCourse[]
+}
+
+enum UserRole {
+  ADMIN   @map("admin")
+  LEARNER @map("learner")
+}
+
+enum UserStatus {
+  ACTIVE    @map("active")
+  PENDING   @map("pending")
+  NOTACTIVE @map("notactive")
+}
+
+model UserCourse {
+  userId   Int
+  courseId Int
+  user     User   @relation(fields: [userId], references: [id])
+  course   Course @relation(fields: [courseId], references: [id])
+
+  @@id([userId, courseId])
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  courseLessons CourseLesson[]
+  userCourses   UserCourse[]
+}
+
+model Lesson {
+  id               Int                @id @default(autoincrement())
+  title            String
+  description      String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  type             LessonType         @default(VOCABULARY)
+  courseLessons    CourseLesson[]
+  lessonVocabulary LessonVocabulary[]
+}
+
+enum LessonType {
+  VOCABULARY @map("vocabulary")
+  GRAMMAR    @map("grammar")
+}
+
+model Vocabulary {
+  id        Int      @id @default(autoincrement())
+  czech     String
+  english   String
+  note      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lessonVocabulary LessonVocabulary[]
+}
+
+model CourseLesson {
+  courseId   Int
+  lessonId   Int
+  order      Int
+  isUnlocked Boolean @default(false)
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@id([courseId, lessonId])
+}
+
+model LessonVocabulary {
+  lessonId     Int
+  vocabularyId Int
+
+  lesson     Lesson     @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  vocabulary Vocabulary @relation(fields: [vocabularyId], references: [id], onDelete: Cascade)
+
+  @@id([lessonId, vocabularyId])
+}
