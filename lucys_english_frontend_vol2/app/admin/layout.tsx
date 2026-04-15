@@ -23,6 +23,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin/courses" className="admin-nav-item">
             <span>🎓</span> Kurzy
           </Link>
+          <Link href="/admin/users" className="admin-nav-item">
+            <span>👥</span> Uživatelé
+          </Link>
         </nav>
       </aside>
 

@@ -7,18 +7,21 @@ export default function AdminDashboard() {
         <h1 className="admin-page-title">Dashboard</h1>
         <p className="admin-page-sub">Vítejte v administraci</p>
       </div>
-
       <div className="admin-cards-grid">
         <Link href="/admin/lessons" className="admin-dashboard-card">
           <div className="admin-dashboard-card-icon">📚</div>
           <h3>Lekce</h3>
           <p>Vytvářejte a spravujte lekce a slovíčka</p>
         </Link>
-
         <Link href="/admin/courses" className="admin-dashboard-card admin-dashboard-card-blue">
           <div className="admin-dashboard-card-icon">🎓</div>
           <h3>Kurzy</h3>
           <p>Sestavujte kurzy z připravených lekcí</p>
+        </Link>
+        <Link href="/admin/users" className="admin-dashboard-card">
+          <div className="admin-dashboard-card-icon">👥</div>
+          <h3>Uživatelé</h3>
+          <p>Spravujte uživatele a přiřazujte jim kurzy</p>
         </Link>
       </div>
     </div>

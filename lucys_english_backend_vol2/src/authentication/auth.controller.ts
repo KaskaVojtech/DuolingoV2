@@ -9,7 +9,6 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
-    //test
     @UseGuards(JwtAuthGuard)
     @Get('me')
     async me(@Req() req: ExpressRequest) {

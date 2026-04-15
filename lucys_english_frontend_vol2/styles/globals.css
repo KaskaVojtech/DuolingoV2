@@ -1203,3 +1203,9 @@ h4 {
     grid-template-columns: 1fr;
   }
 }
+
+.admin-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}

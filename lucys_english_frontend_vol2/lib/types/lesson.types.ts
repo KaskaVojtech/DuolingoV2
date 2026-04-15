@@ -66,3 +66,21 @@ export interface QueryVocabularyDto {
   search?: string;
   lessonId?: number;
 }
+
+// User types
+export type UserStatus = 'ACTIVE' | 'PENDING' | 'NOTACTIVE';
+export type UserRole = 'ADMIN' | 'LEARNER';
+
+export interface UserCourse {
+  courseId: number;
+  course: Course;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  status: UserStatus;
+  role: UserRole;
+  createdAt: string;
+  userCourses: UserCourse[];
+}
