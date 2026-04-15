@@ -13,7 +13,7 @@
   --white: #F8F7FF;
   --white-2: #EEEDF8;
   --gray: #8B8FA8;
-  --border: rgba(255,255,255,0.08);
+  --border: rgba(255, 255, 255, 0.08);
   --shadow-pink: 0 0 40px rgba(232, 87, 122, 0.2);
   --shadow-blue: 0 0 40px rgba(59, 111, 232, 0.2);
 }
@@ -36,7 +36,10 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: 'Syne', sans-serif;
   font-weight: 800;
 }
@@ -174,7 +177,7 @@ h1, h2, h3, h4 {
   padding: 0.85rem 1rem;
   font-size: 0.9rem;
   border-left: 4px solid;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .alert-error {
@@ -191,7 +194,7 @@ h1, h2, h3, h4 {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -313,7 +316,7 @@ h1, h2, h3, h4 {
   left: -100px;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(232,87,122,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(232, 87, 122, 0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -334,7 +337,7 @@ h1, h2, h3, h4 {
   right: -100px;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(59,111,232,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(59, 111, 232, 0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -479,7 +482,7 @@ h1, h2, h3, h4 {
   right: -5%;
   width: 500px;
   height: 500px;
-  background: linear-gradient(135deg, rgba(232,87,122,0.08), rgba(59,111,232,0.08));
+  background: linear-gradient(135deg, rgba(232, 87, 122, 0.08), rgba(59, 111, 232, 0.08));
   clip-path: polygon(50px 0%, 100% 0%, calc(100% - 50px) 100%, 0% 100%);
   pointer-events: none;
 }
@@ -490,7 +493,7 @@ h1, h2, h3, h4 {
   right: 20%;
   width: 200px;
   height: 200px;
-  border: 1px solid rgba(232,87,122,0.2);
+  border: 1px solid rgba(232, 87, 122, 0.2);
   clip-path: polygon(20px 0%, 100% 0%, calc(100% - 20px) 100%, 0% 100%);
   pointer-events: none;
 }
@@ -529,18 +532,37 @@ h1, h2, h3, h4 {
 
 /* --- Animations --- */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* --- Responsive --- */
@@ -636,161 +658,88 @@ h1, h2, h3, h4 {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* --- Admin layout --- */
-.admin-layout {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--dark);
-}
-
-.admin-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  background: var(--dark-2);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.admin-nav-links {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.admin-nav-link {
-  color: var(--gray);
-  text-decoration: none;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.5rem 1rem;
-  transition: color 0.2s;
-}
-
-.admin-nav-link:hover {
-  color: var(--white);
-}
-
-.admin-main {
-  flex: 1;
-  padding: 2rem;
+/* --- Admin Layout --- */
+.admin-dashboard {
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  width: 100%;
+  padding: 2rem 3rem;
 }
 
-/* --- Admin dashboard --- */
-.admin-dashboard {
-  padding: 2rem 0;
+.admin-page-header {
+  margin-bottom: 2rem;
 }
 
-.admin-dashboard-header {
-  margin-bottom: 2.5rem;
-}
-
-.admin-dashboard-title {
-  font-size: 2.5rem;
-}
-
-.admin-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-.admin-dashboard-card {
-  display: block;
-  background: var(--dark-2);
-  border: 1px solid var(--border);
-  border-top: 4px solid var(--pink);
-  padding: 2rem;
-  text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.admin-dashboard-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-pink);
-}
-
-.admin-dashboard-card--blue {
-  border-top-color: var(--blue);
-}
-
-.admin-dashboard-card--blue:hover {
-  box-shadow: var(--shadow-blue);
-}
-
-.admin-dashboard-card-icon {
+.admin-page-title {
   font-size: 2rem;
-  margin-bottom: 1rem;
+  font-weight: 800;
 }
 
-.admin-dashboard-card-title {
-  font-size: 1.3rem;
-  color: var(--white);
-  margin-bottom: 0.5rem;
-}
-
-.admin-dashboard-card-desc {
+.admin-page-sub {
   color: var(--gray);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
 }
 
-/* --- Admin card --- */
+/* --- Admin Card --- */
 .admin-card {
   background: var(--dark-2);
   border: 1px solid var(--border);
   padding: 1.5rem;
+  width: 100%;
 }
 
 .admin-card-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
 }
 
 .admin-card-title {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  font-weight: 800;
 }
 
+/* --- Admin Filters --- */
 .admin-filters {
   display: flex;
   gap: 0.75rem;
+  align-items: center;
   margin-bottom: 1.25rem;
   flex-wrap: wrap;
 }
 
-/* --- Admin list --- */
+/* --- Admin List --- */
 .admin-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
+.admin-empty {
+  color: var(--gray);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
 .admin-list-item {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.25rem;
+  align-items: center;
+  padding: 0.85rem 1rem;
   background: var(--dark-3);
   border: 1px solid var(--border);
   transition: border-color 0.2s;
 }
 
 .admin-list-item:hover {
-  border-color: rgba(255,255,255,0.15);
+  border-color: rgba(232, 87, 122, 0.3);
 }
 
 .admin-list-item-info {
@@ -800,14 +749,13 @@ h1, h2, h3, h4 {
 }
 
 .admin-list-item-title {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .admin-list-item-meta {
-  font-size: 0.8rem;
   color: var(--gray);
+  font-size: 0.8rem;
 }
 
 .admin-list-item-actions {
@@ -815,274 +763,284 @@ h1, h2, h3, h4 {
   gap: 0.5rem;
 }
 
-/* --- Lesson editor --- */
+/* --- Admin Columns (LessonEditor) --- */
+.admin-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-editor-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-editor-title {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray);
+}
+
+.admin-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.admin-column {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  max-height: 75vh;
+}
+
+.admin-column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--dark-3);
+  flex-shrink: 0;
+}
+
+.admin-column-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+}
+
+.admin-column-count {
+  background: var(--pink);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  font-family: 'Syne', sans-serif;
+}
+
+.admin-column-search {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.admin-column-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.admin-column-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.admin-column-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-column-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* --- Vocab Items --- */
+.vocab-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  gap: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.vocab-item:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.vocab-item-added {
+  border-color: rgba(59, 111, 232, 0.4);
+  opacity: 0.6;
+}
+
+.vocab-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.vocab-english {
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vocab-czech {
+  color: var(--gray);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vocab-item-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.vocab-btn {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.vocab-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.vocab-btn-add:hover:not(:disabled) {
+  border-color: var(--blue);
+  color: var(--blue-light);
+  background: rgba(59, 111, 232, 0.1);
+}
+
+.vocab-btn-edit:hover:not(:disabled) {
+  border-color: var(--pink);
+  color: var(--pink-light);
+  background: rgba(232, 87, 122, 0.1);
+}
+
+.vocab-btn-remove:hover:not(:disabled) {
+  border-color: var(--pink-dark);
+  color: var(--pink);
+  background: rgba(232, 87, 122, 0.08);
+}
+
+/* --- Lesson filter checkboxes --- */
+.lesson-filter {
+  margin-top: 0.25rem;
+}
+
+.lesson-filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.lesson-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--gray);
+  cursor: pointer;
+  padding: 0.2rem 0;
+  transition: color 0.15s;
+}
+
+.lesson-filter-item:hover {
+  color: var(--white);
+}
+
+.lesson-filter-item input[type="checkbox"] {
+  accent-color: var(--pink);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+/* --- Responsive admin --- */
+@media (max-width: 1024px) {
+  .admin-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .admin-columns> :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-dashboard {
+    padding: 1rem 1.25rem;
+  }
+
+  .admin-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-column {
+    min-height: 300px;
+    max-height: 50vh;
+  }
+}
+
+/* --- Lesson Editor --- */
 .lesson-editor {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  height: calc(100vh - 80px);
+  width: 100%;
 }
 
 .lesson-editor-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  padding: 1.25rem 1.5rem;
 }
 
-.lesson-type-badge {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--blue-light);
-  border: 1px solid var(--blue);
-  padding: 0.35rem 0.75rem;
-  margin-bottom: 0.5rem;
-}
 
 .lesson-editor-columns {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-  flex: 1;
-  overflow: hidden;
+  gap: 1.25rem;
+  align-items: start;
 }
 
-/* --- Editor columns --- */
-.editor-column {
-  background: var(--dark-2);
-  border: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+@media (max-width: 1024px) {
+  .lesson-editor-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lesson-editor-columns> :last-child {
+    grid-column: 1 / -1;
+  }
 }
 
-.editor-column-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--dark-3);
-}
-
-.editor-column-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.editor-column-count {
-  background: var(--pink);
-  color: var(--white);
-  font-family: 'Syne', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 0.2rem 0.5rem;
-}
-
-.editor-column-hint {
-  font-size: 0.75rem;
-  color: var(--gray);
-  padding: 0.5rem 1.25rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.editor-filters {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.editor-column-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0.5rem;
-}
-
-.editor-empty {
-  color: var(--gray);
-  font-size: 0.85rem;
-  text-align: center;
-  padding: 2rem 1rem;
-}
-
-/* --- Vocabulary items --- */
-.vocab-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 0.75rem;
-  border: 1px solid var(--border);
-  margin-bottom: 0.4rem;
-  transition: border-color 0.15s;
-  background: var(--dark-3);
-}
-
-.vocab-item:hover {
-  border-color: rgba(255,255,255,0.2);
-}
-
-.vocab-item-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  font-size: 0.85rem;
-  min-width: 0;
-}
-
-.vocab-czech {
-  color: var(--white);
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.vocab-arrow {
-  color: var(--gray);
-  flex-shrink: 0;
-}
-
-.vocab-english {
-  color: var(--blue-light);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.vocab-note {
-  color: var(--gray);
-  font-size: 0.75rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.vocab-remove-btn {
-  background: none;
-  border: none;
-  color: var(--gray);
-  cursor: pointer;
-  font-size: 1.2rem;
-  line-height: 1;
-  padding: 0.1rem 0.3rem;
-  flex-shrink: 0;
-  transition: color 0.15s;
-}
-
-.vocab-remove-btn:hover {
-  color: var(--pink);
-}
-
-.vocab-add-btn {
-  background: none;
-  border: none;
-  color: var(--gray);
-  cursor: pointer;
-  font-size: 1.2rem;
-  line-height: 1;
-  padding: 0.1rem 0.3rem;
-  flex-shrink: 0;
-  transition: color 0.15s;
-}
-
-.vocab-add-btn:hover {
-  color: var(--blue-light);
-}
-
-.vocab-item-available .vocab-item-content {
-  cursor: default;
-}
-
-/* ============================================
-   ADMIN LAYOUT
-   ============================================ */
-
-.admin-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  min-height: 100vh;
-}
-
-.admin-sidebar {
-  background: var(--dark-2);
-  border-right: 1px solid var(--border);
-  padding: 2rem 1.5rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 260px;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  overflow-y: auto;
-}
-
-.admin-sidebar-logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.admin-sidebar-tag {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  background: var(--pink);
-  color: var(--white);
-  padding: 0.2rem 0.5rem;
-}
-
-.admin-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.admin-nav-label {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gray);
-  margin-bottom: 0.5rem;
-  padding-left: 0.75rem;
-}
-
-.admin-nav-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  color: var(--gray);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: all 0.15s ease;
-  border-left: 2px solid transparent;
-}
-
-.admin-nav-item:hover {
-  color: var(--white);
-  background: rgba(255,255,255,0.04);
-  border-left-color: var(--pink);
-}
-
-.admin-main {
-  margin-left: 260px;
-  min-height: 100vh;
-  background: var(--dark);
+@media (max-width: 640px) {
+  .lesson-editor-columns {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================
@@ -1156,280 +1114,92 @@ h1, h2, h3, h4 {
 }
 
 /* ============================================
-   ADMIN CARD (seznam lekcí)
+   ADMIN LAYOUT
    ============================================ */
 
-.admin-card {
+.admin-sidebar {
   background: var(--dark-2);
-  border: 1px solid var(--border);
-  border-top: 4px solid var(--pink);
+  border-right: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow-y: auto;
 }
 
-.admin-card-header {
+.admin-sidebar-logo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.admin-card-title {
-  font-size: 1.3rem;
-  font-weight: 800;
-}
-
-.admin-filters {
-  display: flex;
   gap: 0.75rem;
-  align-items: center;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
 }
 
-.admin-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-list-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.15s ease;
-}
-
-.admin-list-item:hover {
-  background: rgba(255,255,255,0.02);
-}
-
-.admin-list-item-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.admin-list-item-title {
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.admin-list-item-meta {
-  font-size: 0.8rem;
-  color: var(--gray);
-}
-
-.admin-list-item-actions {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.admin-empty {
-  color: var(--gray);
-  font-size: 0.9rem;
-  padding: 2rem;
-  text-align: center;
-}
-
-/* ============================================
-   VOCAB ITEMS
-   ============================================ */
-
-.vocab-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.15s ease;
-}
-
-.vocab-item:hover {
-  background: rgba(255,255,255,0.03);
-}
-
-.vocab-item-added {
-  opacity: 0.5;
-}
-
-.vocab-item-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
-
-.vocab-english {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--white);
-}
-
-.vocab-czech {
-  font-size: 0.8rem;
-  color: var(--gray);
-}
-
-.vocab-item-actions {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.vocab-btn {
+.admin-sidebar-tag {
   font-family: 'Syne', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 0.3rem 0.6rem;
-  border: none;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.vocab-btn-edit {
-  background: rgba(59, 111, 232, 0.15);
-  color: var(--blue-light);
-}
-
-.vocab-btn-edit:hover {
-  background: rgba(59, 111, 232, 0.3);
-}
-
-.vocab-btn-remove {
-  background: rgba(232, 87, 122, 0.15);
-  color: var(--pink-light);
-}
-
-.vocab-btn-remove:hover {
-  background: rgba(232, 87, 122, 0.3);
-}
-
-.vocab-btn-add {
-  background: rgba(59, 111, 232, 0.15);
-  color: var(--blue-light);
-  white-space: nowrap;
-}
-
-.vocab-btn-add:hover:not(:disabled) {
-  background: rgba(59, 111, 232, 0.3);
-}
-
-.vocab-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* ============================================
-   LESSON EDITOR
-   ============================================ */
-
-.lesson-editor {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 140px);
-}
-
-.lesson-editor-header {
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 1.5rem;
-}
-
-.lesson-editor-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.5rem;
-  flex: 1;
-  overflow: hidden;
-}
-
-/* ============================================
-   ADMIN COLUMNS
-   ============================================ */
-
-.admin-column {
-  background: var(--dark-2);
-  border: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  max-height: calc(100vh - 280px);
-}
-
-.admin-column-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-
-.admin-column-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.admin-column-count {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
   background: var(--pink);
   color: var(--white);
-  padding: 0.15rem 0.5rem;
+  padding: 0.2rem 0.5rem;
 }
 
-.admin-column-search {
-  padding: 0.75rem;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-
-.admin-column-list {
-  overflow-y: auto;
-  flex: 1;
-}
-
-/* Lesson filter checkboxes */
-.lesson-filter {
-  margin-top: 0.5rem;
-}
-
-.lesson-filter-list {
+.admin-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  max-height: 120px;
-  overflow-y: auto;
+  gap: 0.25rem;
 }
 
-.lesson-filter-item {
+.admin-nav-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+  padding-left: 0.75rem;
+}
+
+.admin-nav-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
+  gap: 0.75rem;
+  padding: 0.75rem;
   color: var(--gray);
-  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+  border-left: 2px solid transparent;
 }
 
-.lesson-filter-item:hover {
+.admin-nav-item:hover {
   color: var(--white);
+  background: rgba(255, 255, 255, 0.04);
+  border-left-color: var(--pink);
 }
 
-.lesson-filter-item input {
-  accent-color: var(--pink);
+.admin-main {
+  margin-left: 260px;
+  min-height: 100vh;
+  background: var(--dark);
 }
 
-/* select styling */
-select.input-field {
-  cursor: pointer;
+/* --- Course Editor --- */
+.course-editor-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
 }
 
-select.input-field option {
-  background: var(--dark-3);
+@media (max-width: 768px) {
+  .course-editor-columns {
+    grid-template-columns: 1fr;
+  }
 }

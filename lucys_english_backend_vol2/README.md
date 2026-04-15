@@ -1,13 +1,6 @@
-oproti starsi verzi krom lepsiho kodu pridano:
- endpointy na lessons, users, vocabulary.
- validatory
- cron na cisteni pending users
- guards
- autorizace (admin/learner)
- 
- zmeneno emailovani z nodemailer na resend
-
- zjednoduseni databaze 
-
-
-
+Co aplikace nyni obsahuje?
+registrace kde prijde potvrzeni na email pro potvrzeni.
+login
+Access a Refresh tokeny
+2 uzivatelske role (user, admin)
+spravovani lekci a kurzu (admin)
