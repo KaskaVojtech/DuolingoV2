@@ -84,3 +84,16 @@ export interface User {
   createdAt: string;
   userCourses: UserCourse[];
 }
+
+export interface Course {
+  id: number;
+  title: string;
+  description?: string;
+  courseLessons?: {
+    courseId: number;
+    lessonId: number;
+    order: number;
+    isUnlocked: boolean;
+    lesson: Lesson;
+  }[];
+}
