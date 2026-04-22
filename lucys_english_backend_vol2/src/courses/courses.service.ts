@@ -109,4 +109,38 @@ export class CoursesService {
             data: { isUnlocked: dto.isUnlocked },
         });
     }
+
+    async unlockAllLessons(courseId: number, isUnlocked: boolean) {
+        await this.findOne(courseId);
+        return this.postgres.courseLesson.updateMany({
+            where: { courseId },
+            data: { isUnlocked },
+        });
+    }
+
+    async duplicate(courseId: number, newTitle: string) {
+        const original = await this.findOne(courseId);
+
+        return this.postgres.$transaction(async (tx) => {
+            const newCourse = await tx.course.create({
+                data: {
+                    title: newTitle || `${original.title} (kopie)`,
+                    description: original.description,
+                },
+            });
+
+            if (original.courseLessons.length > 0) {
+                await tx.courseLesson.createMany({
+                    data: original.courseLessons.map((cl) => ({
+                        courseId: newCourse.id,
+                        lessonId: cl.lessonId,
+                        order: cl.order,
+                        isUnlocked: false,
+                    })),
+                });
+            }
+
+            return newCourse;
+        });
+    }
 }

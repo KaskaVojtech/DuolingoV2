@@ -32,8 +32,12 @@ export class AuthService {
         const passwordMatch = await bcrypt.compare(password, user.passHash);
         if (!passwordMatch) throw new UnauthorizedException('Invalid credentials');
 
-        if (user.status === UserStatus.PENDING) {
-            throw new UnauthorizedException('Please verify your email first');
+        if (user.status !== UserStatus.ACTIVE) {
+            const messages = {
+                [UserStatus.PENDING]: 'Please verify your email first',
+                [UserStatus.NOTACTIVE]: 'Your account has been deactivated',
+            };
+            throw new UnauthorizedException(messages[user.status] || 'Account is not active');
         }
 
         const { accessToken, refreshToken } = await this.generateTokens(user.id, user.email, user.role);

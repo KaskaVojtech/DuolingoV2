@@ -61,12 +61,28 @@ export class CoursesController {
         return this.coursesService.addLesson(courseId, lessonId, dto);
     }
 
+    @Post(':courseId/duplicate')
+    duplicate(
+        @Param('courseId', ParseIntPipe) courseId: number,
+        @Body('title') title: string,
+    ) {
+        return this.coursesService.duplicate(courseId, title);
+    }
+
     @Delete(':courseId/lessons/:lessonId')
     removeLesson(
         @Param('courseId', ParseIntPipe) courseId: number,
         @Param('lessonId', ParseIntPipe) lessonId: number,
     ) {
         return this.coursesService.removeLesson(courseId, lessonId);
+    }
+
+    @Patch(':courseId/lessons/unlock-all')
+    unlockAllLessons(
+        @Param('courseId', ParseIntPipe) courseId: number,
+        @Body() dto: UnlockLessonDto,
+    ) {
+        return this.coursesService.unlockAllLessons(courseId, dto.isUnlocked);
     }
 
     @Patch(':courseId/lessons/:lessonId/order')

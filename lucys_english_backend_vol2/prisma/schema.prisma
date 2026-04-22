@@ -51,8 +51,9 @@ model Course {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  courseLessons CourseLesson[]
-  userCourses   UserCourse[]
+  courseLessons     CourseLesson[]
+  userCourses       UserCourse[]
+  accessCodeCourses AccessCodeCourse[]
 }
 
 model Lesson {
@@ -102,4 +103,32 @@ model LessonVocabulary {
   vocabulary Vocabulary @relation(fields: [vocabularyId], references: [id], onDelete: Cascade)
 
   @@id([lessonId, vocabularyId])
+}
+
+model AccessCode {
+  id        Int              @id @default(autoincrement())
+  code      String           @unique
+  status    AccessCodeStatus @default(ACTIVE)
+  expiresAt DateTime?
+  createdAt DateTime         @default(now())
+  usedAt    DateTime?
+  usedById  Int?
+
+  codeCourses AccessCodeCourse[]
+}
+
+enum AccessCodeStatus {
+  ACTIVE
+  EXPIRED
+  USED
+}
+
+model AccessCodeCourse {
+  accessCodeId Int
+  courseId     Int
+
+  accessCode AccessCode @relation(fields: [accessCodeId], references: [id], onDelete: Cascade)
+  course     Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@id([accessCodeId, courseId])
 }

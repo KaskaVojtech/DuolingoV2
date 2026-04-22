@@ -8,6 +8,7 @@ import { CleanupModule } from './crons/cleanup/cleanup.module';
 import { CoursesModule } from './courses/courses.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { VocabularyModule } from './vocabulary/vocabulary.module';
+import { AccessCodesModule } from './access-codes/access-codes.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { VocabularyModule } from './vocabulary/vocabulary.module';
     CoursesModule,
     LessonsModule,
     VocabularyModule,
+    AccessCodesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
