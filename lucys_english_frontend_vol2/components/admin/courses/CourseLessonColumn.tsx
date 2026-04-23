@@ -16,6 +16,7 @@ export const CourseLessonsColumn: React.FC<CourseLessonsColumnProps> = ({
     onLessonsChange,
 }) => {
     const [removing, setRemoving] = useState<number | null>(null);
+    const [toggling, setToggling] = useState<number | null>(null);
     const router = useRouter();
 
     const handleRemove = async (lessonId: number) => {
@@ -27,6 +28,18 @@ export const CourseLessonsColumn: React.FC<CourseLessonsColumnProps> = ({
             console.error(err);
         } finally {
             setRemoving(null);
+        }
+    };
+
+    const handleToggleLock = async (lessonId: number, currentlyUnlocked: boolean) => {
+        setToggling(lessonId);
+        try {
+            await CoursesApi.unlockLesson(courseId, lessonId, !currentlyUnlocked);
+            onLessonsChange();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setToggling(null);
         }
     };
 

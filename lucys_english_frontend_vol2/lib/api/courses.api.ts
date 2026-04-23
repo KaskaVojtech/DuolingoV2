@@ -43,4 +43,8 @@ export class CoursesApi {
   static async removeLesson(courseId: number, lessonId: number): Promise<void> {
     return ApiClient.delete(`/courses/${courseId}/lessons/${lessonId}`);
   }
+
+  static async unlockLesson(courseId: number, lessonId: number, isUnlocked: boolean): Promise<void> {
+    return ApiClient.patch(`/courses/${courseId}/lessons/${lessonId}/unlock`, { isUnlocked });
+  }
 }
