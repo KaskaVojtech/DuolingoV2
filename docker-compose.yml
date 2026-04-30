@@ -44,7 +44,7 @@ services:
 
   frontend:
     build:
-      context: ./lucys_english_frontend_vol2
+      context: ./lucys_english_frontend_vol3
       dockerfile: Dockerfile
     container_name: frontend
     restart: always

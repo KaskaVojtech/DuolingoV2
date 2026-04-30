@@ -1292,3 +1292,722 @@ h4 {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+/* ============================================
+   GAMES SYSTEM
+   ============================================ */
+
+/* Lesson card clickable state */
+.dashboard-lesson-card--clickable {
+  cursor: pointer;
+}
+.dashboard-lesson-card--clickable:hover {
+  border-top-color: var(--pink);
+  border-color: var(--pink);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-pink);
+}
+
+.dashboard-lesson-card-cta {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--pink);
+  margin-top: 0.25rem;
+}
+
+/* ── Lesson Games Screen ── */
+.lesson-games-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.lesson-games-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.lesson-games-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: var(--gray);
+  align-self: flex-start;
+}
+
+/* ── Games Grid ── */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+/* ── Game Card ── */
+.game-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-top: 4px solid transparent;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.game-card--pink {
+  border-top-color: var(--pink);
+}
+.game-card--pink:hover:not(:disabled) {
+  box-shadow: var(--shadow-pink);
+  transform: translateY(-3px);
+  border-color: var(--pink);
+}
+
+.game-card--blue {
+  border-top-color: var(--blue);
+}
+.game-card--blue:hover:not(:disabled) {
+  box-shadow: var(--shadow-blue);
+  transform: translateY(-3px);
+  border-color: var(--blue);
+}
+
+.game-card--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.game-card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.game-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.game-card-desc {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.game-card-unavailable {
+  font-size: 0.75rem;
+  color: var(--gray);
+  font-style: italic;
+  margin-top: auto;
+}
+
+.game-card-play {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--pink);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: auto;
+}
+
+.game-card--blue .game-card-play {
+  color: var(--blue-light);
+}
+
+/* ============================================
+   GAME SHELL
+   ============================================ */
+
+.game-shell {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── Round Header ── */
+.game-round-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  padding: 0.75rem 1.25rem;
+}
+
+.game-exit-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--gray);
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.game-exit-btn:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+}
+
+.game-round-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.game-round-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+}
+
+.game-round-progress {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.game-round-score {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--blue-light);
+  min-width: 2rem;
+  text-align: right;
+}
+
+/* ── Start Screen ── */
+.game-start-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.game-start-icon {
+  font-size: 3.5rem;
+}
+
+.game-start-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.game-start-desc {
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.game-start-meta {
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+.game-start-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── Result Screen ── */
+.game-result-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.game-result-emoji {
+  font-size: 3.5rem;
+}
+
+.game-result-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.game-result-score {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.game-result-big {
+  font-family: 'Syne', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--pink);
+}
+
+.game-result-sep {
+  font-size: 1.2rem;
+  color: var(--gray);
+}
+
+.game-result-bar-wrap {
+  width: 100%;
+  max-width: 300px;
+  height: 6px;
+  background: var(--dark-3);
+}
+
+.game-result-bar {
+  height: 100%;
+  background: var(--pink);
+  transition: width 0.6s ease;
+}
+
+.game-result-pct {
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+/* ============================================
+   FLASH CARDS GAME
+   ============================================ */
+
+.flashcard-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.flashcard {
+  width: 100%;
+  max-width: 480px;
+  min-height: 220px;
+  cursor: pointer;
+  perspective: 1000px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.flashcard--flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  inset: 0;
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  backface-visibility: hidden;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+  border-top: 4px solid var(--blue);
+}
+
+.flashcard-front {
+  border-top: 4px solid var(--pink);
+}
+
+.flashcard-lang {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+}
+
+.flashcard-word {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 800;
+  color: var(--white);
+}
+
+.flashcard-hint {
+  font-size: 0.8rem;
+  color: var(--gray);
+  font-style: italic;
+}
+
+.flashcard-note {
+  font-size: 0.85rem;
+  color: var(--gray);
+  font-style: italic;
+}
+
+.flashcard-actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+.flashcard-btn {
+  flex: 1;
+  padding: 1rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.flashcard-btn--no {
+  background: var(--dark-3);
+  color: var(--gray);
+  border: 1px solid var(--border);
+}
+.flashcard-btn--no:hover {
+  color: var(--white);
+  border-color: var(--pink);
+}
+
+.flashcard-btn--yes {
+  background: var(--blue);
+  color: var(--white);
+}
+.flashcard-btn--yes:hover {
+  background: var(--blue-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-blue);
+}
+
+/* ============================================
+   MATCHING GAME
+   ============================================ */
+
+.matching-area {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.matching-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray);
+  font-size: 1.2rem;
+  padding-top: 1rem;
+}
+
+.matching-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.matching-tile {
+  background: var(--dark-2);
+  border: 2px solid var(--border);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.matching-tile:hover:not(:disabled) {
+  border-color: var(--pink);
+  background: rgba(232, 87, 122, 0.08);
+}
+
+.matching-tile--selected {
+  border-color: var(--blue) !important;
+  background: rgba(59, 111, 232, 0.15) !important;
+}
+
+.matching-tile--matched {
+  border-color: var(--blue-dark) !important;
+  background: rgba(59, 111, 232, 0.1) !important;
+  color: var(--blue-light) !important;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.matching-tile--wrong {
+  border-color: var(--pink-dark) !important;
+  background: rgba(201, 61, 95, 0.15) !important;
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* ============================================
+   FILL-IN GAME
+   ============================================ */
+
+.fillin-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fillin-question-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--blue);
+  padding: 2rem;
+  text-align: center;
+}
+
+.fillin-prompt {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.fillin-word {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: var(--white);
+}
+
+.fillin-note {
+  font-size: 0.85rem;
+  color: var(--gray);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.fillin-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.fillin-option {
+  background: var(--dark-2);
+  border: 2px solid var(--border);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.fillin-option:hover:not(:disabled) {
+  border-color: var(--blue);
+  background: rgba(59, 111, 232, 0.1);
+}
+
+.fillin-option--correct {
+  border-color: var(--blue) !important;
+  background: rgba(59, 111, 232, 0.2) !important;
+  color: var(--blue-light) !important;
+}
+
+.fillin-option--wrong {
+  border-color: var(--pink-dark) !important;
+  background: rgba(201, 61, 95, 0.15) !important;
+  color: var(--pink-light) !important;
+}
+
+.fillin-option-letter {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--gray);
+  background: var(--dark-3);
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   WRITE GAME
+   ============================================ */
+
+.write-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.write-question-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--pink);
+  padding: 2rem;
+  text-align: center;
+}
+
+.write-prompt {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.write-word {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: var(--white);
+}
+
+.write-note {
+  font-size: 0.85rem;
+  color: var(--gray);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.write-input-wrap {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  border: 2px solid var(--border);
+  padding: 0.25rem 0.25rem 0.25rem 0.75rem;
+  background: var(--dark-2);
+  transition: border-color 0.2s;
+}
+
+.write-input-wrap--correct {
+  border-color: var(--blue) !important;
+}
+
+.write-input-wrap--wrong {
+  border-color: var(--pink-dark) !important;
+}
+
+.write-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  padding: 0.6rem 0;
+}
+
+.write-input::placeholder {
+  color: var(--gray);
+  opacity: 0.5;
+}
+
+.write-input:disabled {
+  opacity: 0.7;
+}
+
+.write-feedback {
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  border-left: 4px solid;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.write-feedback--correct {
+  border-color: var(--blue);
+  color: var(--blue-light);
+}
+
+.write-feedback--wrong {
+  border-color: var(--pink-dark);
+  color: var(--pink-light);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .matching-area {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .matching-divider {
+    display: none;
+  }
+  .fillin-options {
+    grid-template-columns: 1fr;
+  }
+  .games-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .game-start-card,
+  .game-result-card {
+    padding: 2rem 1.25rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+}

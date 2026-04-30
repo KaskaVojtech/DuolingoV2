@@ -64,7 +64,9 @@ export class LessonsController {
         return this.lessonsService.removeVocabulary(lessonId, vocabularyId);
     }
 
+
     @Get(':lessonId/vocabulary')
+    @Role(UserRole.LEARNER, UserRole.ADMIN)
     getVocabulary(@Param('lessonId', ParseIntPipe) lessonId: number) {
         return this.lessonsService.getVocabulary(lessonId);
     }
