@@ -25,6 +25,8 @@ from typing import AsyncIterator, Optional
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
+from fastapi import Depends
+from auth import verify_api_key
 
 # ---------------------------------------------------------------------------
 # Konfigurace
@@ -120,7 +122,7 @@ def health():
 
 
 @app.get("/corpora", response_model=list[CorpusInfo])
-def list_corpora():
+def list_corpora(api_key: str = Depends(verify_api_key)):
     """Vrátí seznam všech korpusů s jejich statistikami."""
     conn = get_connection()
     try:
@@ -141,6 +143,7 @@ def get_sentences(
     corpus: str,
     offset: int = Query(default=0, ge=0, description="Počet přeskočených vět"),
     limit: int = Query(default=DEFAULT_PAGE_SIZE, ge=1, le=MAX_PAGE_SIZE, description="Počet vět na stránku"),
+        api_key: str = Depends(verify_api_key),   
 ):
     """
     Stránkované získávání vět z konkrétního korpusu.
@@ -175,6 +178,7 @@ def get_sentences(
 def get_random_sentences(
     corpus: str,
     count: int = Query(default=10, ge=1, le=500, description="Počet náhodných vět"),
+    api_key: str = Depends(verify_api_key), 
 ):
     """Vrátí N náhodně vybraných vět z korpusu."""
     conn = get_connection()
@@ -199,6 +203,7 @@ def stream_sentences(
     batch_size: int = Query(default=500, ge=1, le=5000, description="Velikost interního batche"),
     offset: int = Query(default=0, ge=0, description="Začít od N-té věty"),
     limit: Optional[int] = Query(default=None, description="Max počet vět (None = vše)"),
+    api_key: str = Depends(verify_api_key), 
 ):
     """
     SSE stream vět z korpusu. Každá zpráva je JSON objekt:

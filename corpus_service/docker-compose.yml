@@ -1,9 +1,5 @@
 services:
 
-  # ────────────────────────────────────────────────────────────
-  # Downloader: stahuje korpusy z HuggingFace a ukládá do SQLite
-  # Spouští se jednorázově (nebo cronerem), pak se ukončí.
-  # ────────────────────────────────────────────────────────────
   downloader:
     build:
       context: ./downloader
@@ -21,10 +17,6 @@ services:
     networks:
       - corpus_net
 
-  # ────────────────────────────────────────────────────────────
-  # API: streamuje věty z SQLite dál (HTTP / SSE)
-  # Čte DB read-only – může běžet paralelně s downloaderm.
-  # ────────────────────────────────────────────────────────────
   api:
     build:
       context: ./api
@@ -35,6 +27,8 @@ services:
       DB_PATH: /data/corpora.db
       DEFAULT_PAGE_SIZE: "100"
       MAX_PAGE_SIZE: "1000"
+      API_KEY_BACKEND: ${API_KEY_BACKEND}   
+      API_KEY_NOVA: ${API_KEY_SENTENCE_PROCESSOR}         
     ports:
       - "8000:8000"
     restart: unless-stopped
@@ -46,6 +40,7 @@ services:
       retries: 3
     networks:
       - corpus_net
+      
 
 volumes:
   corpus_data:
