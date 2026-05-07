@@ -9,6 +9,7 @@ import { CoursesModule } from './courses/courses.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { VocabularyModule } from './vocabulary/vocabulary.module';
 import { AccessCodesModule } from './access-codes/access-codes.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AccessCodesModule } from './access-codes/access-codes.module';
     LessonsModule,
     VocabularyModule,
     AccessCodesModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],
