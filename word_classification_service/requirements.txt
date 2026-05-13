@@ -1,0 +1,18 @@
+# Web framework
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+
+# NLP core
+spacy>=3.7.0,<3.8.0
+nltk>=3.8.0
+
+# Lemmatization / inflection
+lemminflect>=0.2.3
+
+# Numeral conversion
+num2words>=0.5.13
+number-parser>=0.3.2
+word2number>=1.1        # fallback behind number-parser
+
+# Pydantic (pinned to v2, comes with FastAPI but explicit is safer)
+pydantic>=2.0.0

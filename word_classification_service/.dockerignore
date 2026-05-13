@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Git
+.git/
+.gitignore
+
+# Docker (nepotřebuje sám sebe)
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Testy
+tests/
+test_*
+*_test.py
+.pytest_cache/
+.coverage
+
+# NLP modely (baked do image při buildu, ne kopírované z hosta)
+*.bin
+*.vec
+*.model
+*.pt
+nltk_data/
+
+# Logy a dočasné soubory
+*.log
+logs/
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,19 @@
+services:
+  word-classification-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: word-classification-service:latest
+    container_name: word-classification-service
+    ports:
+      - "9000:8000"
+    environment:
+      - NLTK_DATA=/nltk_data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/docs')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
