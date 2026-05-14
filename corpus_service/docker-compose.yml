@@ -1,0 +1,30 @@
+services:
+  corpus-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: corpus-service:latest
+    container_name: corpus-service
+    ports:
+      - "8001:8000"
+    environment:
+      - DB_PATH=/data/corpora.db
+      - API_KEY_CORPUS=${API_KEY_CORPUS}
+      - API_KEY_BACKEND=${API_KEY_BACKEND}
+      - API_KEY_SENTENCE_PROCESSOR=${API_KEY_SENTENCE_PROCESSOR}
+      - DEFAULT_PAGE_SIZE=100
+      - MAX_PAGE_SIZE=1000
+    volumes:
+      # Persist the SQLite database outside the container
+      - corpus-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  corpus-data:

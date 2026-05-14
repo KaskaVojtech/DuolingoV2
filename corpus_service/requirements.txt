@@ -1,0 +1,15 @@
+# Web framework
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+
+# Pydantic
+pydantic>=2.0.0
+
+# HuggingFace datasets (downloader only)
+datasets>=2.19.0
+
+# Deduplication
+pybloom-live>=3.0.0
+
+# Progress bar
+tqdm>=4.66.0
