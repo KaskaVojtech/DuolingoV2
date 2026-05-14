@@ -1,16 +1,15 @@
 """
-configs/starter_configs.py
-==========================
-Předpřipravené konfigurace korpusů pro CorpusDownloader.
+starter_configs.py
+==================
+Pre-built corpus configurations for CorpusDownloader.
 
-Přidání nového korpusu:
-    1. Přidej nový CorpusConfig do seznamu STARTER_CONFIGS
-    2. Vyplň name, hf_path, hf_split
-    3. Pokud má dataset vnořenou strukturu, použij extractor=lambda row: ...
-    4. Pokud má dataset přímé sloupce, použij columns=["nazev_sloupce"]
+Adding a new corpus:
+    1. Append a new CorpusConfig to STARTER_CONFIGS.
+    2. Fill in name, hf_path, hf_split.
+    3. For nested dataset structures use extractor=lambda row: ...
+    4. For flat column datasets use columns=["column_name"].
 """
-
-from corpus_config import CorpusConfig
+from corpus_service.downloader.core.corpus_config import CorpusConfig
 
 STARTER_CONFIGS: list[CorpusConfig] = [
 
@@ -18,7 +17,7 @@ STARTER_CONFIGS: list[CorpusConfig] = [
         name="tatoeba",
         hf_path="sentence-transformers/parallel-sentences-tatoeba",
         hf_split="train",
-        hf_name="all",          # ← add this
+        hf_name="all",
         extractor=lambda row: row["english"],
         max_chars=500,
         on_exceed="skip",
@@ -30,12 +29,12 @@ STARTER_CONFIGS: list[CorpusConfig] = [
         name="generics_kb",
         hf_path="community-datasets/generics_kb",
         hf_split="ALL",
-        hf_name="generics_kb_best",  # kvalitnější podmnožina
+        hf_name="generics_kb_best",
         columns=["generic_sentence"],
         max_chars=300,
         on_exceed="truncate",
         bloom_capacity=4_000_000,
-        description="GenericsKB Best – generické věty o světě",
+        description="GenericsKB Best — generic statements about the world",
     ),
 
     CorpusConfig(
@@ -46,7 +45,7 @@ STARTER_CONFIGS: list[CorpusConfig] = [
         max_chars=200,
         on_exceed="skip",
         bloom_capacity=500_000,
-        description="CommonGen – generativní věty z klíčových slov",
+        description="CommonGen — generative sentences from keyword sets",
     ),
 
     CorpusConfig(
@@ -57,7 +56,7 @@ STARTER_CONFIGS: list[CorpusConfig] = [
         max_chars=300,
         on_exceed="skip",
         bloom_capacity=4_000_000,
-        description="COCO Captions – popisky obrázků (quintets, 5× per obrázek)",
+        description="COCO Captions — image descriptions (quintets, 5× per image)",
     ),
 
     CorpusConfig(
@@ -68,7 +67,7 @@ STARTER_CONFIGS: list[CorpusConfig] = [
         max_chars=400,
         on_exceed="truncate",
         bloom_capacity=500_000,
-        description="SQuAD context passages – faktické odstavce o světě",
+        description="SQuAD context passages — factual paragraphs about the world",
     ),
 
     CorpusConfig(
@@ -80,7 +79,7 @@ STARTER_CONFIGS: list[CorpusConfig] = [
         max_chars=400,
         on_exceed="truncate",
         bloom_capacity=500_000,
-        description="ELI5 – vysvětlení komplexních témat jednoduchým jazykem",
+        description="ELI5 — plain-language explanations of complex topics",
     ),
 
     CorpusConfig(
@@ -92,7 +91,7 @@ STARTER_CONFIGS: list[CorpusConfig] = [
         max_chars=300,
         on_exceed="truncate",
         bloom_capacity=10_000_000,
-        description="Wikipedia EN – encyklopedické věty o světě",
+        description="Wikipedia EN — encyclopaedic sentences about the world",
     ),
 
     CorpusConfig(
@@ -104,7 +103,7 @@ STARTER_CONFIGS: list[CorpusConfig] = [
         max_chars=200,
         on_exceed="skip",
         bloom_capacity=10_000,
-        description="OpenBookQA – vědecké fakty o světě (elementární úroveň)",
+        description="OpenBookQA — elementary science facts about the world",
     ),
 
     CorpusConfig(
@@ -115,7 +114,6 @@ STARTER_CONFIGS: list[CorpusConfig] = [
         max_chars=300,
         on_exceed="skip",
         bloom_capacity=20_000,
-        description="CREAK – tvrzení o entitách a jejich vztazích ke světu",
+        description="CREAK — claims about entities and their relation to the world",
     ),
-
 ]

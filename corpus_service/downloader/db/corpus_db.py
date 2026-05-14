@@ -1,31 +1,30 @@
 """
 corpus_db.py
 ============
-SQLite databáze pro ukládání vět z korpusů.
+SQLite database layer for storing corpus sentences.
 
-Schéma:
+Schema:
     sentences(id, corpus, sentence, added_at)
     corpus_meta(corpus, total_stored, updated_at)
 """
-
 from __future__ import annotations
 
 import sqlite3
 import time
 from pathlib import Path
-from typing import Optional
+from typing import Iterator, Optional
 
 
 class CorpusDB:
     """
-    Jednoduchá SQLite databáze pro ukládání vět z korpusů.
-    Používejte jako context manager:
+    Lightweight SQLite wrapper for corpus sentence storage.
+    Use as a context manager:
 
         with CorpusDB("corpora.db") as db:
             db.bulk_insert(...)
     """
 
-    def __init__(self, db_path: str | Path):
+    def __init__(self, db_path: str | Path) -> None:
         self.db_path = Path(db_path)
         self._conn: Optional[sqlite3.Connection] = None
 
@@ -34,10 +33,10 @@ class CorpusDB:
     # ------------------------------------------------------------------
 
     def __enter__(self) -> "CorpusDB":
-        self._conn = sqlite3.connect(self.db_path, check_same_thread=False)
+        self._conn = sqlite3.connect(str(self.db_path), check_same_thread=False)
         self._conn.execute("PRAGMA journal_mode=WAL")
         self._conn.execute("PRAGMA synchronous=NORMAL")
-        self._conn.execute("PRAGMA cache_size=-131072")  # 128 MB cache
+        self._conn.execute("PRAGMA cache_size=-131072")   # 128 MB page cache
         self._conn.execute("PRAGMA temp_store=MEMORY")
         self._conn.execute("PRAGMA mmap_size=536870912")  # 512 MB mmap
         self._init_schema()
@@ -70,26 +69,26 @@ class CorpusDB:
         self._conn.commit()
 
     # ------------------------------------------------------------------
-    # Čtení
+    # Read
     # ------------------------------------------------------------------
 
     def known_corpora(self) -> set[str]:
-        """Vrátí množinu názvů korpusů které jsou již v DB."""
+        """Return the set of corpus names already present in the DB."""
         rows = self._conn.execute("SELECT corpus FROM corpus_meta").fetchall()
         return {r[0] for r in rows}
 
     def get_total_stored(self, corpus: str) -> int:
-        """Vrátí počet uložených vět pro daný korpus."""
+        """Return the number of sentences stored for the given corpus."""
         row = self._conn.execute(
             "SELECT total_stored FROM corpus_meta WHERE corpus = ?", (corpus,)
         ).fetchone()
         return row[0] if row else 0
 
-    def iter_sentences(self, corpus: str):
+    def iter_sentences(self, corpus: str) -> Iterator[str]:
         """
-        Iterátor přes všechny uložené věty daného korpusu.
-        Čte po batchích 10 000 – nezahltí RAM.
-        Používá se pro preload BloomFilteru.
+        Iterate over all stored sentences for the given corpus.
+        Reads in batches of 10 000 to avoid loading everything into RAM.
+        Used to pre-populate the BloomFilter on restart.
         """
         cursor = self._conn.execute(
             "SELECT sentence FROM sentences WHERE corpus = ?", (corpus,)
@@ -102,7 +101,7 @@ class CorpusDB:
                 yield row[0]
 
     # ------------------------------------------------------------------
-    # Zápis
+    # Write
     # ------------------------------------------------------------------
 
     def bulk_insert(
@@ -111,7 +110,7 @@ class CorpusDB:
         sentences: list[str],
         total_stored: int,
     ) -> None:
-        """Hromadně vloží věty do DB a aktualizuje metadata korpusu."""
+        """Bulk-insert sentences into the DB and update corpus metadata."""
         ts = int(time.time())
         self._conn.executemany(
             "INSERT INTO sentences (corpus, sentence, added_at) VALUES (?, ?, ?)",
@@ -130,11 +129,11 @@ class CorpusDB:
         self._conn.commit()
 
     # ------------------------------------------------------------------
-    # Statistiky
+    # Stats
     # ------------------------------------------------------------------
 
     def stats(self) -> list[dict]:
-        """Vrátí statistiky všech korpusů v DB."""
+        """Return statistics for all corpora in the DB."""
         rows = self._conn.execute(
             """
             SELECT corpus, total_stored,
