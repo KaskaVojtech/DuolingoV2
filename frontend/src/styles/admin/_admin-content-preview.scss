@@ -1,0 +1,29 @@
+.content-preview {
+  font-size: var(--font-size-admin-base);
+  color: theme('colors.admin-text');
+  line-height: 1.6;
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+
+  a {
+    color: theme('colors.admin-primary');
+    text-decoration: underline;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+
+    td {
+      border: 1px solid theme('colors.admin-border');
+      padding: 8px 12px;
+    }
+  }
+}

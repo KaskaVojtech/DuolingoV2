@@ -1,0 +1,139 @@
+// Simuluje žákovský pohled
+.exercise-preview {
+  background: theme('colors.admin-surface');
+  border: 2px solid theme('colors.admin-border');
+  border-radius: theme('borderRadius.admin-lg');
+  padding: theme('spacing.admin-2xl');
+  font-size: var(--font-size-admin-base);
+  box-shadow: var(--shadow-admin-md);
+  position: relative;
+  overflow: hidden;
+
+  // brand accent ribbon at the top of the student view
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-brand);
+  }
+}
+
+// Input ve větě
+.preview-inline-input {
+  display: inline-block;
+  min-width: 80px;
+  border-bottom: 2px solid theme('colors.admin-primary');
+  background: transparent;
+  color: theme('colors.admin-text');
+  padding: 2px 4px;
+  outline: none;
+  font-size: inherit;
+
+  &:focus { background: rgba(91, 124, 250, 0.08); }
+}
+
+// Select ve větě
+.preview-inline-select {
+  display: inline-block;
+  background: theme('colors.admin-surface-2');
+  border: 1px solid theme('colors.admin-border');
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: inherit;
+  color: theme('colors.admin-text');
+  cursor: pointer;
+}
+
+// Drag source box
+.preview-drag-source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: theme('spacing.admin-md');
+  background: theme('colors.admin-surface-2');
+  border: 1px dashed theme('colors.admin-border');
+  border-radius: theme('borderRadius.admin-md');
+  margin: theme('spacing.admin-md') 0;
+}
+
+.preview-drag-word {
+  padding: 4px 12px;
+  background: theme('colors.admin-surface');
+  border: 1px solid theme('colors.admin-border');
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--font-size-admin-sm);
+  user-select: none;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+
+  &:hover { border-color: theme('colors.admin-primary'); transform: translateY(-2px); box-shadow: var(--shadow-admin-sm); }
+
+  &--selected {
+    background: rgba(91, 124, 250, 0.15);
+    border-color: theme('colors.admin-primary');
+    color: theme('colors.admin-primary');
+  }
+}
+
+// Drag target slot
+.preview-drag-target {
+  display: inline-block;
+  min-width: 80px;
+  min-height: 26px;
+  border-bottom: 2px dashed theme('colors.admin-border');
+  background: transparent;
+  vertical-align: middle;
+  transition: background-color 150ms ease, border-color 150ms ease;
+
+  &--over {
+    background: rgba(91, 124, 250, 0.1);
+    border-color: theme('colors.admin-primary');
+  }
+
+  &--filled {
+    background: theme('colors.admin-surface-2');
+    border-style: solid;
+    border-radius: 3px;
+    padding: 0 6px;
+  }
+
+  &--ready {
+    border-color: theme('colors.admin-primary');
+    background: rgba(91, 124, 250, 0.05);
+    cursor: pointer;
+  }
+}
+
+// Výsledky
+.preview-result--correct { border-color: #2db868 !important; }
+.preview-result--wrong   { border-color: theme('colors.admin-danger') !important; }
+
+// MC možnost
+.preview-mc-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: theme('spacing.admin-sm') theme('spacing.admin-md');
+  border: 1px solid theme('colors.admin-border');
+  border-radius: theme('borderRadius.admin-md');
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+
+  &:hover { background: theme('colors.admin-surface-2'); border-color: theme('colors.admin-primary'); transform: translateX(3px); }
+  &--selected { background: rgba(91, 124, 250, 0.12); border-color: theme('colors.admin-primary'); }
+}
+
+// Highlight slovo
+.preview-highlight-word {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background-color 150ms ease;
+
+  &:hover   { background: rgba(255,255,255,0.1); }
+  &--selected { background: rgba(91, 124, 250, 0.25); border-bottom: 2px solid theme('colors.admin-primary'); }
+}

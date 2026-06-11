@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@theme {
+  /* ─── Typography ─────────────────────────────────────────────── */
+  --font-sans: 'Nunito', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ─── Core palette (DARK is the default) ─────────────────────── */
+  --color-admin-bg:         #0d0f20;
+  --color-admin-surface:    #161829;
+  --color-admin-surface-2:  #1f2138;
+  --color-admin-border:     #2c2e4d;
+  --color-admin-primary:    #5b7cfa;
+  --color-admin-primary-h:  #4a6bf0;
+  --color-admin-accent:     #ff5fa2;
+  --color-admin-accent-h:   #f5478f;
+  --color-admin-danger:     #f0566b;
+  --color-admin-danger-bg:  #2a1622;
+  --color-admin-text:       #ecedfb;
+  --color-admin-text-muted: #8c91bd;
+
+  /* Brand gradients (blue → violet → pink) */
+  --gradient-brand:        linear-gradient(135deg, #5b7cfa 0%, #a855f7 52%, #ff5fa2 100%);
+  --gradient-brand-h:      linear-gradient(135deg, #4a6bf0 0%, #9a45ef 52%, #f5478f 100%);
+  --gradient-brand-soft:   linear-gradient(135deg, rgba(91,124,250,0.18) 0%, rgba(168,85,247,0.14) 52%, rgba(255,95,162,0.18) 100%);
+
+  /* Elevation / shadows (tinted toward the night-indigo bg) */
+  --shadow-admin-sm:    0 1px 2px rgba(7, 8, 22, 0.45);
+  --shadow-admin-md:    0 6px 20px rgba(7, 8, 22, 0.45);
+  --shadow-admin-lg:    0 16px 40px rgba(7, 8, 22, 0.55);
+  --shadow-admin-glow:  0 8px 24px rgba(91, 124, 250, 0.40);
+  --shadow-accent-glow: 0 8px 24px rgba(255, 95, 162, 0.38);
+
+  /* Font sizes */
+  --font-size-admin-xs:   clamp(0.7rem, 0.9vw, 0.75rem);
+  --font-size-admin-sm:   clamp(0.8rem, 1vw, 0.875rem);
+  --font-size-admin-base: clamp(0.875rem, 1.1vw, 1rem);
+  --font-size-admin-lg:   clamp(1rem, 1.3vw, 1.125rem);
+  --font-size-admin-xl:   clamp(1.2rem, 1.6vw, 1.5rem);
+  --font-size-admin-2xl:  clamp(1.5rem, 2vw, 2rem);
+
+  /* Spacing */
+  --spacing-admin-xs:  clamp(0.25rem, 0.4vw, 0.5rem);
+  --spacing-admin-sm:  clamp(0.5rem, 0.7vw, 0.75rem);
+  --spacing-admin-md:  clamp(0.75rem, 1vw, 1rem);
+  --spacing-admin-lg:  clamp(1rem, 1.5vw, 1.5rem);
+  --spacing-admin-xl:  clamp(1.5rem, 2vw, 2rem);
+  --spacing-admin-2xl: clamp(2rem, 3vw, 3rem);
+
+  /* Border radius */
+  --radius-admin-sm: 8px;
+  --radius-admin-md: 12px;
+  --radius-admin-lg: 18px;
+
+  /* Sidebar colors */
+  --color-admin-sidebar-bg:           #0a0c1a;
+  --color-admin-sidebar-hover:        #181b32;
+  --color-admin-sidebar-active:       #20233e;
+  --color-admin-sidebar-text:         #9197c6;
+  --color-admin-sidebar-text-active:  #ecedfb;
+  --color-admin-sidebar-icon:         #5b6092;
+  --color-admin-sidebar-border:       #1b1e38;
+  --color-admin-sidebar-section:      #4c5188;
+
+  /* Tile colors (legacy compat) */
+  --color-tile-amber:      #c47c1a;
+  --color-tile-amber-dark: #8a5510;
+  --color-tile-cyan:       #2db8b8;
+  --color-tile-blue:       #1a6fd4;
+  --color-tile-peach:      #d4956a;
+  --color-tile-teal-dark:  #1a7a6e;
+
+  /* Sidebar spacing */
+  --spacing-sidebar-expanded:  240px;
+  --spacing-sidebar-collapsed: 64px;
+
+  /* Course card colors */
+  --color-course-card-bg:              #161829;
+  --color-course-card-border:          #2c2e4d;
+  --color-course-card-hover:           #1f2138;
+  --color-course-placeholder-bg:       #13152a;
+  --color-course-placeholder-border:   #2a2c4a;
+  --color-course-placeholder-icon:     #3d4168;
+
+  /* Toolbar colors */
+  --color-toolbar-bg:     #0f1124;
+  --color-toolbar-border: #1f2138;
+
+  /* Block type colors */
+  --color-block-content-primary:  #ff5fa2;
+  --color-block-content-bg:       #271526;
+  --color-block-content-border:   #5c2046;
+  --color-block-exercise-primary: #5b7cfa;
+  --color-block-exercise-bg:      #161a2e;
+  --color-block-exercise-border:  #243079;
+  --color-block-mix-primary:      #22c79a;
+  --color-block-mix-bg:           #0f2a24;
+  --color-block-mix-border:       #1a5c4c;
+
+  /* Add block modal */
+  --color-modal-content-bg:     #3a1530;
+  --color-modal-content-hover:  #50204a;
+  --color-modal-exercise-bg:    #161c44;
+  --color-modal-exercise-hover: #1f2860;
+
+  /* Card dimensions */
+  --spacing-card-lg-w:  220px;
+  --spacing-card-lg-h:  260px;
+  --spacing-card-sm-w:  140px;
+  --spacing-card-sm-h:  160px;
+  --spacing-list-row-h: 64px;
+}
+
+/* ─── Light mode overrides ─────────────────────────────────────── */
+[data-theme="light"] {
+  --color-admin-bg:         #f3f1fb;
+  --color-admin-surface:    #ffffff;
+  --color-admin-surface-2:  #f6f3fc;
+  --color-admin-border:     #e7e2f4;
+  --color-admin-primary:    #5468f0;
+  --color-admin-primary-h:  #4355e2;
+  --color-admin-accent:     #f0468f;
+  --color-admin-accent-h:   #e23380;
+  --color-admin-danger:     #e0455a;
+  --color-admin-danger-bg:  #fdeef1;
+  --color-admin-text:       #1b1c33;
+  --color-admin-text-muted: #6c6f93;
+
+  --gradient-brand:        linear-gradient(135deg, #5468f0 0%, #9a45ef 52%, #f0468f 100%);
+  --gradient-brand-h:      linear-gradient(135deg, #4355e2 0%, #8c3ae0 52%, #e23380 100%);
+  --gradient-brand-soft:   linear-gradient(135deg, rgba(84,104,240,0.12) 0%, rgba(154,69,239,0.10) 52%, rgba(240,70,143,0.12) 100%);
+
+  --shadow-admin-sm:    0 1px 2px rgba(80, 70, 140, 0.10);
+  --shadow-admin-md:    0 6px 20px rgba(80, 70, 140, 0.14);
+  --shadow-admin-lg:    0 16px 40px rgba(80, 70, 140, 0.18);
+  --shadow-admin-glow:  0 8px 24px rgba(84, 104, 240, 0.28);
+  --shadow-accent-glow: 0 8px 24px rgba(240, 70, 143, 0.26);
+
+  --color-admin-sidebar-bg:           #ffffff;
+  --color-admin-sidebar-hover:        #f4f0fc;
+  --color-admin-sidebar-active:       #fceaf3;
+  --color-admin-sidebar-text:         #6c6f93;
+  --color-admin-sidebar-text-active:  #1b1c33;
+  --color-admin-sidebar-icon:         #9aa0c4;
+  --color-admin-sidebar-border:       #ebe7f6;
+  --color-admin-sidebar-section:      #9298bc;
+
+  --color-course-card-bg:              #ffffff;
+  --color-course-card-border:          #e7e2f4;
+  --color-course-card-hover:           #f8f5fd;
+  --color-course-placeholder-bg:       #f6f3fc;
+  --color-course-placeholder-border:   #e7e2f4;
+  --color-course-placeholder-icon:     #b9bcdc;
+
+  --color-toolbar-bg:     #ffffff;
+  --color-toolbar-border: #ebe7f6;
+
+  --color-block-content-bg:       #fdeef6;
+  --color-block-content-border:   #f6cbe0;
+  --color-block-exercise-bg:      #eef1ff;
+  --color-block-exercise-border:  #cdd6fb;
+  --color-block-mix-bg:           #e9fbf4;
+  --color-block-mix-border:       #aee8d3;
+
+  --color-modal-content-bg:     #fdeef6;
+  --color-modal-content-hover:  #fbdcec;
+  --color-modal-exercise-bg:    #eef1ff;
+  --color-modal-exercise-hover: #e0e7ff;
+}

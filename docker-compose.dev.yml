@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      target: base
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  frontend:
+    build:
+      context: ./frontend
+      target: base
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    # Turbopack dev je v této verzi Next 16 rozbitý (ReferenceError: require is not defined),
+    # proto frontend servírujeme produkčním buildem (next build + next start).
+    command: sh -c "npm run build && npm run start"

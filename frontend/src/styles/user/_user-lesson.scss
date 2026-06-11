@@ -1,0 +1,98 @@
+// ─── User lesson player — game controls ──────────────────────────────
+
+// Feedback obarvení (sdílené napříč hrami)
+.game-answer--correct {
+  border-color: #2db868 !important;
+  background: rgba(45, 184, 104, 0.10) !important;
+}
+.game-answer--wrong {
+  border-color: var(--color-admin-danger) !important;
+  background: rgba(240, 86, 107, 0.10) !important;
+}
+
+// Word-order / draggable chips
+.game-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--font-size-admin-sm);
+  color: var(--color-admin-text);
+  background: var(--color-admin-surface-2);
+  border: 1px solid var(--color-admin-border);
+  border-radius: var(--radius-admin-sm);
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-admin-primary);
+    transform: translateY(-1px);
+  }
+  &:disabled { cursor: default; }
+
+  &--picked {
+    background: var(--gradient-brand-soft);
+    border-color: var(--color-admin-primary);
+  }
+}
+
+// Choice options (MC / listening)
+.game-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: left;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--font-size-admin-sm);
+  color: var(--color-admin-text);
+  background: var(--color-admin-surface-2);
+  border: 1px solid var(--color-admin-border);
+  border-radius: var(--radius-admin-sm);
+  padding: 0.55rem var(--spacing-admin-md);
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
+
+  & > i { color: var(--color-admin-text-muted); }
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-admin-primary);
+    transform: translateY(-1px);
+  }
+  &:disabled { cursor: default; }
+
+  &--selected {
+    border-color: var(--color-admin-primary);
+    background: var(--gradient-brand-soft);
+    & > i { color: var(--color-admin-primary); }
+  }
+  &--correct {
+    border-color: #2db868;
+    background: rgba(45, 184, 104, 0.12);
+    & > i { color: #2db868; }
+  }
+  &--wrong {
+    border-color: var(--color-admin-danger);
+    background: rgba(240, 86, 107, 0.12);
+    & > i { color: var(--color-admin-danger); }
+  }
+}
+
+// Blok lekce — stav zamčení
+.lesson-block--locked {
+  opacity: 0.7;
+}
+
+// Mix — přechod mezi hrami (Duolingo styl)
+@keyframes mix-slide-in {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes mix-slide-out {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-28px); }
+}
+.mix-stage--in  { animation: mix-slide-in 260ms cubic-bezier(0.22, 1, 0.36, 1); }
+.mix-stage--out { animation: mix-slide-out 180ms ease forwards; }

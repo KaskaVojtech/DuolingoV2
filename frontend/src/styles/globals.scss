@@ -1,0 +1,25 @@
+@import "./tailwind.css";
+
+@import "./admin/admin-base";
+@import "./admin/admin-forms";
+@import "./admin/admin-sidebar";
+@import "./admin/admin-dashboard";
+@import "./admin/admin-courses";
+@import "./admin/admin-course-settings";
+@import "./admin/admin-lessons-list";
+@import "./admin/admin-lesson-content";
+@import "./admin/admin-exercise-editor";
+@import "./admin/admin-exercise-preview";
+@import "./admin/admin-course-create";
+@import "./admin/admin-global-lessons";
+@import "./admin/admin-content-editor";
+@import "./admin/admin-content-preview";
+@import "./admin/admin-template-import";
+@import "./admin/admin-vocabulary";
+@import "./admin/admin-mix-editor";
+@import "./admin/admin-practice";
+
+@import "./user/user-lesson";
+@import "./user/user";
+
+

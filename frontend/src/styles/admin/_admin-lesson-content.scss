@@ -1,0 +1,119 @@
+.block-row {
+  border-left: 3px solid transparent;
+  transition: border-color 150ms ease, background-color 150ms ease;
+
+  &:hover { background: var(--color-admin-sidebar-hover); }
+
+  &--content  { border-left-color: var(--color-block-content-primary); }
+  &--exercise { border-left-color: var(--color-block-exercise-primary); }
+  &--mix      { border-left-color: var(--color-block-mix-primary); }
+  &--locked   { border-left-color: var(--color-admin-sidebar-icon) !important; }
+}
+
+.block-drag-handle {
+  cursor: grab;
+  color: var(--color-admin-sidebar-icon);
+  transition: color 150ms ease;
+  &:hover  { color: var(--color-admin-text-muted); }
+  &:active { cursor: grabbing; }
+}
+
+.block-row--dragging {
+  opacity: 0.85;
+  box-shadow: var(--shadow-admin-lg);
+  background: var(--color-admin-surface-2);
+  border-radius: 12px;
+  z-index: 999;
+}
+
+.block-constraint-drop-zone {
+  border: 2px dashed var(--color-admin-border);
+  border-radius: 10px;
+  min-height: 80px;
+  transition: border-color 150ms ease, background-color 150ms ease;
+
+  &--active {
+    border-color: var(--color-admin-primary);
+    background: rgba(91, 124, 250, 0.05);
+  }
+}
+
+.block-constraint-item {
+  &--content  { border-left: 2px solid var(--color-block-content-primary); }
+  &--exercise { border-left: 2px solid var(--color-block-exercise-primary); }
+}
+
+// Navigační záložky sekcí lekce
+.lesson-nav-tabs {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+
+  &__tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: theme('borderRadius.admin-sm');
+    font-size: var(--font-size-admin-sm);
+    color: theme('colors.admin-text-muted');
+    text-decoration: none;
+    transition: background-color 150ms ease, color 150ms ease;
+
+    i { font-size: 14px; }
+
+    &:hover {
+      background: theme('colors.admin-sidebar-hover');
+      color: theme('colors.admin-text');
+    }
+
+    &--active {
+      background: var(--gradient-brand-soft);
+      color: theme('colors.admin-text');
+      font-weight: 700;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        bottom: 0;
+        height: 2px;
+        border-radius: 2px 2px 0 0;
+        background: var(--gradient-brand);
+      }
+    }
+  }
+}
+
+.add-block-modal {
+  &__panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(2rem, 3vw, 3rem);
+    cursor: pointer;
+    transition: background-color 180ms ease;
+
+    &--exercise { background: var(--color-modal-exercise-bg); &:hover { background: var(--color-modal-exercise-hover); } }
+    &--content  { background: var(--color-modal-content-bg);  &:hover { background: var(--color-modal-content-hover);  } }
+
+    &:hover .add-block-modal__icon { transform: scale(1.12) translateY(-2px); }
+  }
+
+  &__icon {
+    font-size: 40px;
+    margin-bottom: clamp(0.75rem, 1vw, 1rem);
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &__divider {
+    width: 1px;
+    background: var(--color-admin-border);
+    align-self: stretch;
+  }
+}

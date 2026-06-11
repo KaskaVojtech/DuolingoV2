@@ -1,0 +1,113 @@
+// Tabulka
+.vocabulary-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    font-size: var(--font-size-admin-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: theme('colors.admin-text-muted');
+    padding: theme('spacing.admin-sm') theme('spacing.admin-md');
+    border-bottom: 1px solid theme('colors.admin-border');
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  td {
+    padding: theme('spacing.admin-sm') theme('spacing.admin-md');
+    border-bottom: 1px solid theme('colors.admin-border');
+    font-size: var(--font-size-admin-sm);
+    color: theme('colors.admin-text');
+    vertical-align: middle;
+  }
+
+  tr:hover td { background: theme('colors.admin-sidebar-hover'); }
+
+  .row-actions {
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+
+  tr:hover .row-actions { opacity: 1; }
+}
+
+// Rozbalený detail řádku
+.vocabulary-detail {
+  background: theme('colors.admin-surface-2');
+  padding: theme('spacing.admin-md') theme('spacing.admin-lg') theme('spacing.admin-md') 48px;
+  font-size: var(--font-size-admin-sm);
+  color: theme('colors.admin-text-muted');
+  border-bottom: 1px solid theme('colors.admin-border');
+  display: flex;
+  gap: theme('spacing.admin-xl');
+  align-items: flex-start;
+
+  &__text { flex: 1; }
+  &__media { display: flex; gap: theme('spacing.admin-md'); align-items: center; }
+
+  .word-image {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: theme('borderRadius.admin-sm');
+    border: 1px solid theme('colors.admin-border');
+  }
+
+  .play-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: theme('colors.admin-surface');
+    border: 1px solid theme('colors.admin-border');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+
+    &:hover { background: theme('colors.admin-surface-2'); }
+  }
+}
+
+// Import badge (zdroj slovíčka)
+.import-source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: var(--font-size-admin-xs);
+  background: theme('colors.admin-surface-2');
+  border: 1px solid theme('colors.admin-border');
+  color: theme('colors.admin-text-muted');
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 150ms ease, color 150ms ease;
+
+  &:hover {
+    border-color: theme('colors.admin-primary');
+    color: theme('colors.admin-primary');
+  }
+}
+
+// Dvou-fázový modal — progress indikátor
+.modal-phase-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-admin-xs);
+  color: theme('colors.admin-text-muted');
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: theme('colors.admin-border');
+    transition: background-color 150ms ease;
+
+    &--active { background: theme('colors.admin-primary'); }
+  }
+}

@@ -1,0 +1,64 @@
+.lesson-drag-handle {
+  cursor: grab;
+  color: var(--color-admin-sidebar-icon);
+  transition: color 150ms ease;
+
+  &:hover { color: var(--color-admin-text-muted); }
+  &:active { cursor: grabbing; }
+}
+
+.lesson-row--dragging {
+  opacity: 0.85;
+  box-shadow: var(--shadow-admin-lg);
+  background: var(--color-admin-surface-2);
+  border-radius: 12px;
+  z-index: 999;
+}
+
+.lesson-row--drop-target {
+  border: 2px dashed var(--color-admin-primary);
+  background: rgba(91, 124, 250, 0.05);
+}
+
+.lesson-row--locked {
+  border-left: 3px solid var(--color-admin-danger) !important;
+
+  .lesson-title {
+    color: var(--color-admin-text-muted);
+  }
+}
+
+.constraint-drop-zone {
+  border: 2px dashed var(--color-admin-border);
+  border-radius: 10px;
+  min-height: 80px;
+  transition: border-color 150ms ease, background-color 150ms ease;
+
+  &--active {
+    border-color: var(--color-admin-primary);
+    background: rgba(91, 124, 250, 0.05);
+  }
+}
+
+.add-lesson-modal {
+  &__panel {
+    flex: 1;
+    padding: clamp(2rem, 3vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 180ms ease, filter 180ms ease;
+
+    &:hover {
+      filter: brightness(1.08);
+      .add-lesson-modal__icon { transform: scale(1.12) translateY(-2px); }
+    }
+    &:first-child { background: var(--color-admin-surface); }
+    &:last-child  { background: var(--color-admin-surface-2); }
+  }
+
+  &__icon { transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1); }
+}

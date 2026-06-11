@@ -1,0 +1,169 @@
+// Layout — fáze selecting
+.template-import {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: 0;
+  height: calc(100vh - 56px - theme('spacing.admin-2xl') * 2 - 120px);
+  min-height: 500px;
+  border: 1px solid theme('colors.admin-border');
+  border-radius: theme('borderRadius.admin-lg');
+  overflow: hidden;
+}
+
+.template-list {
+  border-right: 1px solid theme('colors.admin-border');
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &__search {
+    padding: theme('spacing.admin-md');
+    border-bottom: 1px solid theme('colors.admin-border');
+    flex-shrink: 0;
+  }
+
+  &__items {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  &__footer {
+    padding: theme('spacing.admin-md');
+    border-top: 1px solid theme('colors.admin-border');
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: theme('spacing.admin-md');
+  }
+}
+
+.template-list-item {
+  padding: theme('spacing.admin-md');
+  border-bottom: 1px solid theme('colors.admin-border');
+  cursor: pointer;
+  transition: background-color 150ms ease;
+  border-left: 2px solid transparent;
+
+  &:hover { background: theme('colors.admin-sidebar-hover'); }
+
+  &--selected {
+    background: var(--gradient-brand-soft);
+    border-left-color: theme('colors.admin-primary');
+  }
+
+  &__title {
+    font-size: var(--font-size-admin-sm);
+    font-weight: 700;
+    color: theme('colors.admin-text');
+    margin-bottom: 4px;
+  }
+
+  &__meta {
+    font-size: var(--font-size-admin-xs);
+    color: theme('colors.admin-text-muted');
+    line-height: 1.6;
+  }
+}
+
+// Fáze placing
+.placing-mode {
+  user-select: none;
+}
+
+// Drop zone
+.drop-zone-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 8px;
+  border-radius: 2px;
+  background: theme('colors.admin-border');
+  opacity: 0.25;
+  transition: height 150ms ease, opacity 150ms ease, background-color 150ms ease;
+  margin: 2px 0;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  overflow: hidden;
+
+  &:hover,
+  &--active {
+    height: 52px;
+    opacity: 1;
+    background: rgba(91, 124, 250, 0.08);
+    border: 2px dashed theme('colors.admin-primary');
+    border-radius: theme('borderRadius.admin-md');
+
+    .drop-zone-indicator__label { opacity: 1; }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
+  &__label {
+    font-size: var(--font-size-admin-sm);
+    font-weight: 500;
+    color: theme('colors.admin-primary');
+    opacity: 0;
+    transition: opacity 100ms ease;
+    display: flex;
+    align-items: center;
+    gap: theme('spacing.admin-xs');
+    pointer-events: none;
+  }
+}
+
+// Náhled kurzu
+.course-preview {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: theme('spacing.admin-2xl');
+
+  &__lesson-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: theme('spacing.admin-md');
+    background: theme('colors.admin-surface');
+    border: 1px solid theme('colors.admin-border');
+    border-radius: theme('borderRadius.admin-md');
+    height: 52px;
+    pointer-events: none;
+    margin-bottom: 0;
+  }
+
+  &__lesson-title {
+    font-size: var(--font-size-admin-sm);
+    color: theme('colors.admin-text');
+    display: flex;
+    align-items: center;
+    gap: theme('spacing.admin-sm');
+  }
+
+  &__lesson-meta {
+    font-size: var(--font-size-admin-xs);
+    color: theme('colors.admin-text-muted');
+  }
+}
+
+// Placing toolbar
+.placing-toolbar {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: theme('colors.admin-surface-2');
+  border-bottom: 1px solid theme('colors.admin-border');
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 theme('spacing.admin-xl');
+  z-index: 50;
+  font-size: var(--font-size-admin-sm);
+  color: theme('colors.admin-text-muted');
+}

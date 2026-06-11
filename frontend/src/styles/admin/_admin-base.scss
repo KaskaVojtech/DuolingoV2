@@ -1,0 +1,196 @@
+// Admin base styles
+
+// ─── Global typography & surface ─────────────────────────────────
+
+html {
+  font-family: var(--font-sans);
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-admin-text);
+  background: var(--color-admin-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.01em;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+// Pink-tinted text selection
+::selection {
+  background: rgba(255, 95, 162, 0.30);
+  color: var(--color-admin-text);
+}
+
+// Slim, theme-aware scrollbars
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-admin-border) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-admin-border);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+
+  &:hover {
+    background: var(--color-admin-primary);
+    background-clip: padding-box;
+  }
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+// ─── Shared keyframes ────────────────────────────────────────────
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+// Reusable entrance helpers
+.admin-fade-in   { animation: fadeIn 250ms ease both; }
+.admin-rise-in   { animation: slideInUp 280ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.admin-scale-in  { animation: scaleIn 220ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+// Brand gradient text (logos, headings)
+.brand-gradient-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+// ─── SlideDrawer ──────────────────────────────────────────────────
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 8, 22, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 44;
+  animation: fadeIn 200ms ease;
+}
+
+.slide-drawer {
+  position: fixed;
+  top: 56px;
+  right: 0;
+  height: calc(100vh - 56px);
+  background: var(--color-admin-surface);
+  border-left: 1px solid var(--color-admin-border);
+  box-shadow: var(--shadow-admin-lg);
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+
+  &--open { transform: translateX(0); }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(1rem, 1.5vw, 1.5rem);
+    border-bottom: 1px solid var(--color-admin-border);
+    flex-shrink: 0;
+  }
+
+  &__close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--color-admin-text-muted);
+    transition: background-color 150ms ease, color 150ms ease, transform 200ms ease;
+
+    &:hover {
+      background: var(--color-admin-surface-2);
+      color: var(--color-admin-text);
+      transform: rotate(90deg);
+    }
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: clamp(1rem, 1.5vw, 1.5rem);
+  }
+}
+
+// ─── Toast ───────────────────────────────────────────────────────
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: clamp(0.5rem, 0.7vw, 0.75rem) clamp(0.75rem, 1vw, 1rem);
+  background: var(--color-admin-surface);
+  border: 1px solid var(--color-admin-border);
+  border-radius: 12px;
+  font-size: clamp(0.8rem, 1vw, 0.875rem);
+  font-weight: 600;
+  color: var(--color-admin-text);
+  cursor: pointer;
+  box-shadow: var(--shadow-admin-md);
+  animation: slideInUp 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  border-left-width: 4px;
+  min-width: 280px;
+  max-width: 400px;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+
+  &:hover { transform: translateY(-2px); box-shadow: var(--shadow-admin-lg); }
+
+  &--success { border-left-color: #22c79a; i { color: #22c79a; } }
+  &--error   { border-left-color: var(--color-admin-danger); i { color: var(--color-admin-danger); } }
+  &--info    { border-left-color: var(--color-admin-primary); i { color: var(--color-admin-primary); } }
+}
+
+// ─── Sortable handle ─────────────────────────────────────────────
+
+.sortable-handle {
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--color-admin-sidebar-icon);
+  border-radius: 8px;
+  transition: color 150ms ease, background-color 150ms ease;
+
+  &:active { cursor: grabbing; }
+  &:hover {
+    color: var(--color-admin-primary);
+    background: var(--color-admin-surface-2);
+  }
+}

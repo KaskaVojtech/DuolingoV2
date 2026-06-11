@@ -1,0 +1,63 @@
+.admin-root {
+  min-height: 100vh;
+  background: var(--color-admin-bg);
+}
+
+.admin-main {
+  min-height: 100vh;
+  padding-top: 56px;
+  transition: margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-sidebar {
+  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
+
+  &__item-text {
+    transition: opacity 200ms ease, width 300ms ease;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__toggle-icon {
+    transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    &--rotated {
+      transform: rotate(180deg);
+    }
+  }
+
+  // Navigation links
+  &__link {
+    border-left: 2px solid transparent;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+
+    // gradient active rail
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) scaleY(0);
+      width: 3px;
+      height: 60%;
+      border-radius: 0 4px 4px 0;
+      background: var(--gradient-brand);
+      transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &:hover {
+      background: var(--color-admin-sidebar-hover);
+      transform: translateX(2px);
+    }
+
+    .admin-sidebar__icon { transition: color 160ms ease, transform 200ms ease; }
+    &:hover .admin-sidebar__icon { transform: scale(1.12); }
+
+    &--active {
+      background: var(--color-admin-sidebar-active);
+
+      &::before { transform: translateY(-50%) scaleY(1); }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+// Item řádek
+.exercise-item-row {
+  border: 1px solid theme('colors.admin-border');
+  border-radius: theme('borderRadius.admin-md');
+  background: theme('colors.admin-surface');
+  transition: border-color 150ms ease, box-shadow 200ms ease;
+
+  &:hover:not(&--active) {
+    border-color: color-mix(in srgb, var(--color-admin-primary) 45%, var(--color-admin-border));
+    box-shadow: var(--shadow-admin-sm);
+  }
+
+  &--active {
+    border-color: theme('colors.admin-primary');
+    box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.22);
+  }
+}
+
+// Inline editor — řádek nodů
+.inline-content-editor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: theme('spacing.admin-sm');
+  background: theme('colors.admin-surface-2');
+  border-radius: theme('borderRadius.admin-sm');
+  min-height: 44px;
+}
+
+// Text node input
+.inline-text-node {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: theme('colors.admin-text');
+  font-size: var(--font-size-admin-base);
+  min-width: 40px;
+  width: auto;
+
+  &:focus { background: rgba(255,255,255,0.04); border-radius: 3px; }
+}
+
+// Inline komponenta chip (select, input, drag_target)
+.inline-component-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: var(--font-size-admin-xs);
+  cursor: pointer;
+  transition: filter 150ms ease;
+
+  &:hover { filter: brightness(1.15); }
+
+  &--input         { background: theme('colors.block-exercise-bg'); border: 1px solid theme('colors.block-exercise-border'); color: theme('colors.block-exercise-primary'); }
+  &--select        { background: rgba(45, 184, 184, 0.12); border: 1px solid rgba(45, 184, 184, 0.3); color: #2db8b8; }
+  &--select_between{ background: rgba(180, 100, 200, 0.12); border: 1px solid rgba(180, 100, 200, 0.3); color: #b464c8; }
+  &--drag_target   { background: rgba(240, 150, 50, 0.12); border: 1px dashed rgba(240, 150, 50, 0.3); color: #f09632; }
+}
+
+// Add item menu grid
+.add-item-menu {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: theme('spacing.admin-sm');
+  padding: theme('spacing.admin-lg');
+  background: theme('colors.admin-surface-2');
+  border: 1px solid theme('colors.admin-border');
+  border-radius: theme('borderRadius.admin-lg');
+}
+
+.add-item-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: theme('spacing.admin-md');
+  border-radius: theme('borderRadius.admin-md');
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  font-size: var(--font-size-admin-xs);
+  font-weight: 600;
+  color: theme('colors.admin-text-muted');
+
+  &:hover {
+    background: theme('colors.admin-surface');
+    color: theme('colors.admin-text');
+    transform: translateY(-2px);
+
+    i { transform: scale(1.15); color: var(--color-admin-primary); }
+  }
+
+  i { font-size: 22px; transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), color 150ms ease; }
+}
